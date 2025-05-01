@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("-ProjetoEdenz")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7216ea2a3998993be961fa461d8840d7ea8cb5ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f4a4e9e5b00cb403daba5453bfa417c7824b595")]
 [assembly: System.Reflection.AssemblyProductAttribute("-ProjetoEdenz")]
 [assembly: System.Reflection.AssemblyTitleAttribute("-ProjetoEdenz")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
