@@ -1446,11 +1446,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\DesenvWebAvancado - repositorio\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+      "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
       "projectName": "-ProjetoEdenz",
-      "projectPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\DesenvWebAvancado - repositorio\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+      "projectPath": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
       "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\DesenvWebAvancado - repositorio\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
+      "outputPath": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1513,6 +1513,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.15, 8.0.15]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.15, 8.0.15]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.15, 8.0.15]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.15, 8.0.15]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"

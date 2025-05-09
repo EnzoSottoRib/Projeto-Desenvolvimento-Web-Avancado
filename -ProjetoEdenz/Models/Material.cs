@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Xablau.Models
+namespace _ProjetoEdenz.Models
 {
     public class Material
 

@@ -10,7 +10,7 @@ using _ProjetoEdenz.Data;
 namespace _ProjetoEdenz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250501221532_Inicial")]
+    [Migration("20250509000029_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace _ProjetoEdenz.Migrations
                 .HasAnnotation("ProductVersion", "7.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Xablau.Models.Engenheiro", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Engenheiro", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Engenheiro");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Equipamento", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Equipamento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Equipamento");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Manutencao", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Manutencao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Manutencao");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Material", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Material", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,7 +157,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Material");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Obra", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Obra", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,7 +235,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Obra");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Status", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Status", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Status");
                 });
 
-            modelBuilder.Entity("Xablau.Models.TipoManutencao", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.TipoManutencao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,7 +267,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("TipoManutencao");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Trilho", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Trilho", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -283,7 +283,7 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Trilho");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Usuario", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,27 +314,27 @@ namespace _ProjetoEdenz.Migrations
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Manutencao", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Manutencao", b =>
                 {
-                    b.HasOne("Xablau.Models.Equipamento", "Equipamento")
+                    b.HasOne("_ProjetoEdenz.Models.Equipamento", "Equipamento")
                         .WithMany()
                         .HasForeignKey("EquipamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xablau.Models.Material", "Material")
+                    b.HasOne("_ProjetoEdenz.Models.Material", "Material")
                         .WithMany()
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xablau.Models.Obra", "Obra")
+                    b.HasOne("_ProjetoEdenz.Models.Obra", "Obra")
                         .WithMany()
                         .HasForeignKey("ObraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xablau.Models.Trilho", "Trilho")
+                    b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
                         .WithMany()
                         .HasForeignKey("TrilhoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -349,21 +349,21 @@ namespace _ProjetoEdenz.Migrations
                     b.Navigation("Trilho");
                 });
 
-            modelBuilder.Entity("Xablau.Models.Obra", b =>
+            modelBuilder.Entity("_ProjetoEdenz.Models.Obra", b =>
                 {
-                    b.HasOne("Xablau.Models.Engenheiro", "Engenheiro")
+                    b.HasOne("_ProjetoEdenz.Models.Engenheiro", "Engenheiro")
                         .WithMany()
                         .HasForeignKey("EngenheiroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xablau.Models.Status", "Status")
+                    b.HasOne("_ProjetoEdenz.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xablau.Models.Usuario", "Usuario")
+                    b.HasOne("_ProjetoEdenz.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
