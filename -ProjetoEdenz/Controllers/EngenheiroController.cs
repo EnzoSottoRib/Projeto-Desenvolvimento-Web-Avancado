@@ -2,8 +2,7 @@ using _ProjetoEdenz.Data;
 using _ProjetoEdenz.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-namespace Xablau.Controllers
+namespace _ProjetoEdenz.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -55,7 +54,7 @@ namespace Xablau.Controllers
             var engenheiroExistente = await _appDbContext.Engenheiro.FindAsync(id);
 
             if (engenheiroExistente == null) {
-                return NotFound("Personagem não encontrado!");
+                return NotFound("Engenheiro não encontrado!");
             }
 
             _appDbContext.Entry(engenheiroExistente).CurrentValues.SetValues(engenheiroAtualizado);
