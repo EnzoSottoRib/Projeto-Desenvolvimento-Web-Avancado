@@ -2,32 +2,32 @@ import React from 'react';
 import { useEffect ,useState } from 'react';
 import fotoMain from '../img/tremHome.png';
 import axios from 'axios';
-import "../../css/ComponentsCadastrar.css";
+//import "../../css/Components.css";
 
-interface Trilho {
-    id?: number;
-    nome: string;
+interface Obra {
+    // id?: number;
+    // nome: string;
 }
 
 
-function TrilhoAdicionar() {
-  const [trilhos, setTrilhos] = useState<Trilho[]>([]);
+function ObraAdicionar() {
+  // const [trilhos, setTrilhos] = useState<Trilho[]>([]);
   const [nome, setNome] = useState("");
 
 
   function enviarTrilho(e: React.FormEvent) {
     e.preventDefault();
 
-    const trilho: Trilho = {
-      nome,
-    };
+    // const trilho: Trilho = {
+    //   nome,
+    // };
 
             fetch("http://localhost:5178/api/trilho", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(trilho),
+        // body: JSON.stringify(trilho),
         })
         .then((response) => response.json())
         .then((data) => {
@@ -42,7 +42,7 @@ function TrilhoAdicionar() {
   return (
     <div className="form-container">
       <div className="form-header">
-        <h2>Cadastro de Trilho</h2>
+        <h2>Cadastro de Obra</h2>
       </div>
       <form onSubmit={enviarTrilho}>
         <div className="form-group">
@@ -63,4 +63,4 @@ function TrilhoAdicionar() {
   );
 }
 
-export default TrilhoAdicionar
+export default ObraAdicionar

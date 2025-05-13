@@ -2,32 +2,30 @@ import React from 'react';
 import { useEffect ,useState } from 'react';
 import fotoMain from '../img/tremHome.png';
 import axios from 'axios';
-import "../../css/ComponentsCadastrar.css";
+//import "../../css/Components.css";
 
-interface Trilho {
-    id?: number;
-    nome: string;
+interface Engenheiro {
 }
 
 
-function TrilhoAdicionar() {
-  const [trilhos, setTrilhos] = useState<Trilho[]>([]);
-  const [nome, setNome] = useState("");
+function EngenheiroAdicionar() {
+  // const [trilhos, setTrilhos] = useState<Trilho[]>([]);
+  // const [nome, setNome] = useState("");
 
 
   function enviarTrilho(e: React.FormEvent) {
     e.preventDefault();
 
-    const trilho: Trilho = {
-      nome,
-    };
+    // const trilho: Trilho = {
+    //   nome,
+    // };
 
             fetch("http://localhost:5178/api/trilho", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(trilho),
+        // body: JSON.stringify(trilho),
         })
         .then((response) => response.json())
         .then((data) => {
@@ -42,7 +40,7 @@ function TrilhoAdicionar() {
   return (
     <div className="form-container">
       <div className="form-header">
-        <h2>Cadastro de Trilho</h2>
+        <h2>Cadastro de Engenheiro</h2>
       </div>
       <form onSubmit={enviarTrilho}>
         <div className="form-group">
@@ -51,9 +49,9 @@ function TrilhoAdicionar() {
             placeholder="Ex: TR-11"
             type="text"
             id="nome"
-            value={nome}
-            required
-            onChange={(e) => setNome(e.target.value)}
+            // value={nome}
+            // required
+            // onChange={(e) => setNome(e.target.value)}
           />
         </div>
         
@@ -63,4 +61,4 @@ function TrilhoAdicionar() {
   );
 }
 
-export default TrilhoAdicionar
+export default EngenheiroAdicionar
