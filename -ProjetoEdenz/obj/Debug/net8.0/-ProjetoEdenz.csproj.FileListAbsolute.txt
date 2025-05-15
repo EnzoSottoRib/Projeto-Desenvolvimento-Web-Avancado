@@ -44,27 +44,24 @@ C:\Users\Eduardo\OneDrive\Área de Trabalho\DesenvWebAvancado - repositorio\Proj
 C:\Users\Eduardo\OneDrive\Área de Trabalho\DesenvWebAvancado - repositorio\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.pdb
 C:\Users\Eduardo\OneDrive\Área de Trabalho\DesenvWebAvancado - repositorio\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.genruntimeconfig.cache
 C:\Users\Eduardo\OneDrive\Área de Trabalho\DesenvWebAvancado - repositorio\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\ref\-ProjetoEdenz.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\appsettings.json
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.staticwebassets.endpoints.json
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.exe
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.deps.json
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.runtimeconfig.json
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.pdb
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Humanizer.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.OpenApi.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Mono.TextTemplating.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\MySqlConnector.dll
-C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\appsettings.json
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.staticwebassets.endpoints.json
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Humanizer.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\MySqlConnector.dll
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\System.CodeDom.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.csproj.AssemblyReference.cache
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.GeneratedMSBuildEditorConfig.editorconfig
@@ -88,5 +85,8 @@ C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\refint\-ProjetoEdenz.dll
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.pdb
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.deps.json
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.runtimeconfig.json
+C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\-ProjetoEdenz.pdb
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.genruntimeconfig.cache
 C:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\ref\-ProjetoEdenz.dll
