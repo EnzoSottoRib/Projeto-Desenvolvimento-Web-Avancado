@@ -4,20 +4,62 @@ import fotoMain from '../img/tremHome.png';
 // import "../css/Home.css";
 
 
+interface TipoManutencao {
+    id?: number;
+    nome: string;
+}
+
 function TipoManutencaoAdicionar() {
+  const [tiposManutencao, setTiposManutencao] = useState<TipoManutencao[]>([]);
+  const [nome, setNome] = useState("");
 
 
-    return <div>
-       
-    <main>
-        Tipo de Manutenção Adicionar
-    </main>
-    <footer>
-        <p>Todos os direitos reservados © Edenz LTDA</p>
-    </footer>
-</div>
+  function enviarTipoManutencao(e: React.FormEvent) {
+    e.preventDefault();
 
+    const tipoManutencao: TipoManutencao = {
+      nome,
+    };
 
+            fetch("http://localhost:5178/api/tipomanutencao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tipoManutencao),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Tipo de manutenção cadastrado:", data);
+            alert("Tipo de manutenção Cadastrado");
+        })
+        .catch((error) => {
+            console.error("Erro ao cadastrar tipo de manutenção!", error);
+        });
+  }
+
+  return (
+    <div className="form-container">
+      <div className="form-header">
+        <h2>Cadastro de Tipo de Manutenção</h2>
+      </div>
+      <form onSubmit={enviarTipoManutencao}>
+        <div className="form-group">
+          <label htmlFor="nome">Nome</label>
+          <input
+            placeholder="Ex: Preventiva"
+            type="text"
+            id="nome"
+            value={nome}
+            required
+            onChange={(e) => setNome(e.target.value)}
+          />
+        </div>
+        
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+  );
 }
 
 export default TipoManutencaoAdicionar

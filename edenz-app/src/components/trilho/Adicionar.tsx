@@ -35,7 +35,7 @@ function TrilhoAdicionar() {
             alert("Trilho Cadastrado");
         })
         .catch((error) => {
-            console.error("Erro ao cadastrar trilho:", error);
+            console.error("Erro ao cadastrar trilho!", error);
         });
   }
 

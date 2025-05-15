@@ -30,7 +30,7 @@ function TrilhoListar() {
     axios
       .delete(`http://localhost:5178/api/trilho/${id}`)
       .then((resposta) => {
-        console.log("Fóssil deletado:", resposta.data);
+        console.log("Trilho deletado:", resposta.data);
        
         setTrilhos(trilhos.filter(trilho => trilho.id !== id));
       })

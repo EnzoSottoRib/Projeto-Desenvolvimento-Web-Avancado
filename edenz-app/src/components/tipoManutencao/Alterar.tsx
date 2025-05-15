@@ -3,62 +3,62 @@ import { useEffect ,useState } from 'react';
 import fotoMain from '../img/tremHome.png';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-// import "../css/Home.css";
+//import "../css/Home.css";
 
-// interface Trilho {
-//     id?: number;
-//     nome: string;
-// }
+interface Tipomanutencao {
+    id?: number;
+    nome: string;
+}
 
 
 function TipoManutencaoAlterar() {
-  // const { id } = useParams();
-  // const [trilho, setTrilho] = useState<Trilho | null>(null);
-  // const [nome, setNome] = useState("");
+  const { id } = useParams();
+  const [tipoManutencao, setTipoManutencao] = useState<Tipomanutencao | null>(null);
+  const [nome, setNome] = useState("");
 
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get<Trilho>(`http://localhost:5178/api/trilho/${id}`)
-  //       .then((resposta) => {
-  //         const trilhoData = resposta.data;
-  //         setTrilho(trilhoData);
-  //         setNome(trilhoData.nome);
-  //       })
-  //       .catch((erro) => {
-  //         console.error("Erro ao buscar trilhos:", erro);
-  //       });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Tipomanutencao>(`http://localhost:5178/api/tipomanutencao/${id}`)
+        .then((resposta) => {
+          const tipoManutencaoData = resposta.data;
+          setTipoManutencao(tipoManutencaoData);
+          setNome(tipoManutencaoData.nome);
+        })
+        .catch((erro) => {
+          console.error("Erro ao buscar tipos de manutenção:", erro);
+        });
+    }
+  }, [id]);
 
-  // function enviarTrilho(e: any) {
-  //   e.preventDefault();
+  function enviarTipoManutencao(e: any) {
+    e.preventDefault();
 
-  //   const trilhoData: Trilho = {
-  //     id: Number(id),
-  //     nome
-  //   };
+    const tipoManutencaoData: Tipomanutencao = {
+      id: Number(id),
+      nome
+    };
 
-  //   axios
-  //     .put(`http://localhost:5178/api/trilho/${id}`, trilhoData)
-  //     .then((resposta) => {
-  //       console.log("Trilho atualizado", resposta.data);
-  //       alert("Trilho Atualizado!!!")
-  //     })
-  //     .catch((erro) => {
-  //       console.error("Erro ao atualizar trilho", erro);
-  //     });
-  // }
+    axios
+      .put(`http://localhost:5178/api/tipomanutencao/${id}`, tipoManutencaoData)
+      .then((resposta) => {
+        console.log("Tipo de manutenção atualizado", resposta.data);
+        alert("Tipo de manutenção atualizado!!!")
+      })
+      .catch((erro) => {
+        console.error("Erro ao atualizar tipo de manutenção", erro);
+      });
+  }
 
-  // if (!trilho) return <div>Carregando...</div>; 
+  if (!tipoManutencao) return <div>Carregando...</div>; 
 
   return (
     <div className="form-container">
-      {/* <div className="form-header">
-        <h2>Editar Trilho</h2>
+      <div className="form-header">
+        <h2>Editar Tipo de Manutenção</h2>
       </div>
-      <form onSubmit={enviarTrilho}>
+      <form onSubmit={enviarTipoManutencao}>
         <div className="form-group">
           <label htmlFor="nome">Nome</label>
           <input
@@ -71,7 +71,7 @@ function TipoManutencaoAlterar() {
         </div>
        
         <button type="submit">Salvar Alterações</button>
-      </form> */}
+      </form>
     </div>
   );
 }

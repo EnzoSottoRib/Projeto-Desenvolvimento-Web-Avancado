@@ -90,8 +90,8 @@ function App() {
                 <li className="dropdown">   
                     <span className="dropdown-label">Tipo de manutenção</span>
                     <ul className="dropdown-menu">
-                        <li><Link to="/listar/tipo-manutencao">Listar</Link></li>
-                        <li><Link to="/adicionar/tipo-manutencao">Adicionar</Link></li>
+                        <li><Link to="/listar/tipomanutencao">Listar</Link></li>
+                        <li><Link to="/adicionar/tipomanutencao">Adicionar</Link></li>
                     </ul>
                 </li>
                 <li className="dropdown">   
@@ -128,9 +128,9 @@ function App() {
         <Route path="/adicionar/equipamento" element={<EquipamentoAdicionar/>}></Route>
         <Route path="/editar/equipamento/:id" element={<EquipamentoAlterar/>}></Route>  
         {/* Tipo de manutenção */}
-        <Route path="/listar/tipo-manutencao" element={<TipoManutencaoListar/>}></Route>
-        <Route path="/adicionar/tipo-manutencao" element={<TipoManutencaoAdicionar/>}></Route>
-        <Route path="/editar/tipo-manutencao/:id" element={<TipoManutencaoAlterar/>}></Route>  
+        <Route path="/listar/tipomanutencao" element={<TipoManutencaoListar/>}></Route>
+        <Route path="/adicionar/tipomanutencao" element={<TipoManutencaoAdicionar/>}></Route>
+        <Route path="/editar/tipomanutencao/:id" element={<TipoManutencaoAlterar/>}></Route>  
         {/* Manutenção */}
         <Route path="/listar/manutencao" element={<ManutencaoListar/>}></Route>
         <Route path="/adicionar/manutencao" element={<ManutencaoAdicionar/>}></Route>
