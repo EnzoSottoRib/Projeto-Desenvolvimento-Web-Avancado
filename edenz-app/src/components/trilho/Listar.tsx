@@ -31,7 +31,7 @@ function TrilhoListar() {
       .delete(`http://localhost:5178/api/trilho/${id}`)
       .then((resposta) => {
         console.log("Trilho deletado:", resposta.data);
-       
+        alert("Trilho Deletado!")
         setTrilhos(trilhos.filter(trilho => trilho.id !== id));
       })
       .catch((erro) => {

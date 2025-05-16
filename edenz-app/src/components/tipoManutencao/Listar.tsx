@@ -33,7 +33,7 @@ function TipoManutencaoListar() {
       .delete(`http://localhost:5178/api/tipomanutencao/${id}`)
       .then((resposta) => {
         console.log("Tipo de manutenção deletado!", resposta.data);
-       
+       alert("Tipo de manutenção Deletado!")
         setTiposManutencao(tiposManutencao.filter(tipoManutencao => tipoManutencao.id !== id));
       })
       .catch((erro) => {
