@@ -19,22 +19,33 @@ namespace _ProjetoEdenz.Controllers
         [HttpPost]
         public async Task<IActionResult> AddManutencao(Manutencao manutencao)
         {
-            if (manutencao == null) {
-                return BadRequest("Dados inválidos!");
+            var equipamentoExiste = await _appDbContext.Equipamentos
+                .AnyAsync(e => e.EquipamentoId == manutencao.EquipamentoId);
+            
+            if (!equipamentoExiste)
+                return BadRequest("Equipamento não encontrado!");
+
+            foreach (var material in manutencao.Materiais)
+            {
+                var materialExiste = await _appDbContext.Materiais
+                    .AnyAsync(m => m.MaterialId == material.MaterialId);
+                
+                if (!materialExiste)
+                    return BadRequest($"Material ID {material.MaterialId} não existe!");
             }
 
             _appDbContext.Manutencao.Add(manutencao);
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, manutencao);
+            return CreatedAtAction(nameof(GetManutencaoById), new { id = manutencao.ManutencaoId }, manutencao);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Manutencao>>> GetManutencao()
+        public async Task<ActionResult<IEnumerable<Manutencao>>> GetAllManutencoes()
         {
             var manutencao = await _appDbContext.Manutencao
-                .Include(o => o.Equipamento)
-                .Include(o => o.Material)
+                .Include(m => m.Equipamento)
+                .Include(m => m.Material)
                 .ToListAsync();
 
             return Ok(manutencao);
@@ -43,7 +54,10 @@ namespace _ProjetoEdenz.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Manutencao>> GetManutencao(int id)
         {
-            var manutencao = await _appDbContext.Manutencao.FindAsync(id);
+            var manutencao = await _appDbContext.Manutencao
+                .Include(m => m.Equipamento)
+                .Include(m => m.Materiais)
+                .FirstOrDefaultAsync(m => m.ManutencaoId == id);
 
             if (manutencao == null) {
                 return NotFound("Manutenção não encontrada!");
