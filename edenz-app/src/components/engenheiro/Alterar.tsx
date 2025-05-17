@@ -1,64 +1,77 @@
-import React from 'react';
-import { useEffect ,useState } from 'react';
-import fotoMain from '../img/tremHome.png';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-// import "../css/Home.css";
 
-// interface Trilho {
-//     id?: number;
-//     nome: string;
-// }
-
+interface Engenheiro {
+  id?: number;
+  nome: string;
+  cpf: string;
+  dataNascimento: string;
+  registroCREA: string;
+  contato: string;
+}
 
 function EngenheiroAlterar() {
-  // const { id } = useParams();
-  // const [trilho, setTrilho] = useState<Trilho | null>(null);
-  // const [nome, setNome] = useState("");
+  const { id } = useParams();
+  const [engenheiro, setEngenheiro] = useState<Engenheiro | null>(null);
 
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [registroCREA, setRegistroCREA] = useState("");
+  const [contato, setContato] = useState("");
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get<Trilho>(`http://localhost:5178/api/trilho/${id}`)
-  //       .then((resposta) => {
-  //         const trilhoData = resposta.data;
-  //         setTrilho(trilhoData);
-  //         setNome(trilhoData.nome);
-  //       })
-  //       .catch((erro) => {
-  //         console.error("Erro ao buscar trilhos:", erro);
-  //       });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Engenheiro>(`http://localhost:5178/api/engenheiro/${id}`)
+        .then((resposta) => {
+          const dados = resposta.data;
+          setEngenheiro(dados);
+          setNome(dados.nome);
+          setCpf(dados.cpf);
+          setDataNascimento(dados.dataNascimento);
+          setRegistroCREA(dados.registroCREA);
+          setContato(dados.contato);
+        })
+        .catch((erro) => {
+          console.error("Erro ao buscar engenheiro", erro);
+        });
+    }
+  }, [id]);
 
-  // function enviarTrilho(e: any) {
-  //   e.preventDefault();
+  function enviarEngenheiro(e: React.FormEvent) {
+    e.preventDefault();
 
-  //   const trilhoData: Trilho = {
-  //     id: Number(id),
-  //     nome
-  //   };
+    const engenheiroAtualizado: Engenheiro = {
+      id: Number(id),
+      nome,
+      cpf,
+      dataNascimento,
+      registroCREA,
+      contato,
+    };
 
-  //   axios
-  //     .put(`http://localhost:5178/api/trilho/${id}`, trilhoData)
-  //     .then((resposta) => {
-  //       console.log("Trilho atualizado", resposta.data);
-  //       alert("Trilho Atualizado!!!")
-  //     })
-  //     .catch((erro) => {
-  //       console.error("Erro ao atualizar trilho", erro);
-  //     });
-  // }
+    axios
+      .put(`http://localhost:5178/api/engenheiro/${id}`, engenheiroAtualizado)
+      .then((resposta) => {
+        console.log("Engenheiro atualizado:", resposta.data);
+        alert("Engenheiro atualizado com sucesso!");
+      })
+      .catch((erro) => {
+        console.error("Erro ao atualizar engenheiro:", erro);
+        alert("Erro ao atualizar engenheiro!");
+      });
+  }
 
-  // if (!trilho) return <div>Carregando...</div>; 
+  if (!engenheiro) return <div>Carregando engenheiro...</div>;
 
   return (
     <div className="form-container">
-      {/* <div className="form-header">
-        <h2>Editar Trilho</h2>
+      <div className="form-header">
+        <h2>Editar Engenheiro</h2>
       </div>
-      <form onSubmit={enviarTrilho}>
+      <form onSubmit={enviarEngenheiro}>
         <div className="form-group">
           <label htmlFor="nome">Nome</label>
           <input
@@ -69,11 +82,55 @@ function EngenheiroAlterar() {
             required
           />
         </div>
-       
+
+        <div className="form-group">
+          <label htmlFor="cpf">CPF</label>
+          <input
+            type="text"
+            id="cpf"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="dataNascimento">Data de Nascimento</label>
+          <input
+            type="text"
+            id="dataNascimento"
+            value={dataNascimento}
+            onChange={(e) => setDataNascimento(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="registroCREA">Registro CREA</label>
+          <input
+            type="text"
+            id="registroCREA"
+            value={registroCREA}
+            onChange={(e) => setRegistroCREA(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="contato">Contato</label>
+          <input
+            type="text"
+            id="contato"
+            value={contato}
+            onChange={(e) => setContato(e.target.value)}
+            required
+          />
+        </div>
+
         <button type="submit">Salvar Alterações</button>
-      </form> */}
+      </form>
     </div>
   );
 }
 
-export default EngenheiroAlterar
+export default EngenheiroAlterar;
