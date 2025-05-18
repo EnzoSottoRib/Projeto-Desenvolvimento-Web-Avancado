@@ -29,6 +29,7 @@ import EngenheiroAlterar from './components/engenheiro/Alterar';
 import ObraAlterar from './components/obra/Alterar';
 import StatusAlterar from './components/status/Alterar';
 import UsuarioAlterar from './components/usuario/Alterar';
+import Login from './components/login/Login';
 
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
         <nav className="nav-bar">
             <h1>Edenz</h1>
             <ul>
-                <li><Link to="/">Home</Link></li>
+                <li><Link to="/home">Home</Link></li>
                 
                 <li className="dropdown">   
                     <span className="dropdown-label">Trilho</span>
@@ -113,7 +114,11 @@ function App() {
     </header>
    
     <Routes>
-    <Route path="/" element={<Home/>}></Route>
+        {/* Raiz = Login */}
+        <Route path="/" element={<Login/>}></Route>
+
+        {/* Home */}
+        <Route path="/home" element={<Home/>}></Route>
 
         {/* trilho */}
         <Route path="/listar/trilho" element={<TrilhoListar/>}></Route>

@@ -20,7 +20,7 @@ function EquipamentoAdicionar() {
       nome,
     };
 
-            fetch("http://localhost:5178/api/equipamento", {
+        fetch("http://localhost:5178/api/equipamento", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
