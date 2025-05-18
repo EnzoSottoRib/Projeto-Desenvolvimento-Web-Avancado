@@ -3,7 +3,6 @@ using _ProjetoEdenz.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace _ProjetoEdenz.Controllers
 {
     [ApiController]
@@ -24,24 +23,23 @@ namespace _ProjetoEdenz.Controllers
                 return BadRequest(ModelState);
             }
 
-            _appDbContext.Usuario.Add(usuario);
+            _appDbContext.Usuarios.Add(usuario);
             await _appDbContext.SaveChangesAsync();
 
             return StatusCode(201, usuario);
         }
 
         [HttpGet]
-        public async Task<ActionResult <IEnumerable<Usuario>>> GetUsuario()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
         {
-            var usuarios = await _appDbContext.Usuario.ToListAsync();
-
+            var usuarios = await _appDbContext.Usuarios.ToListAsync();
             return Ok(usuarios);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var usuario = await _appDbContext.Usuario.FindAsync(id);
+            var usuario = await _appDbContext.Usuarios.FindAsync(id);
 
             if (usuario == null) {
                 return NotFound("Usuario não encontrado!");
@@ -53,7 +51,7 @@ namespace _ProjetoEdenz.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, [FromBody] Usuario usuarioAtualizado)
         {
-            var usuarioExistente = await _appDbContext.Usuario.FindAsync(id);
+            var usuarioExistente = await _appDbContext.Usuarios.FindAsync(id);
 
             if (usuarioExistente == null) {
                 return NotFound("Usuario não encontrado!");
@@ -69,14 +67,13 @@ namespace _ProjetoEdenz.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUsuario(int id)
         {
-            var usuario = await _appDbContext.Usuario.FindAsync(id);
+            var usuario = await _appDbContext.Usuarios.FindAsync(id);
 
             if (usuario == null) {
                 return NotFound("Usuario não encontrado!");
             }
 
             _appDbContext.Remove(usuario);
-
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Usuario mandado para a glória!");

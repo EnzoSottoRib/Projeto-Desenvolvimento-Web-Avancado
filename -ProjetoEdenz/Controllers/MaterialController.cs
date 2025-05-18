@@ -3,7 +3,7 @@ using _ProjetoEdenz.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Xablau.Controllers
+namespace _ProjetoEdenz.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -19,30 +19,31 @@ namespace Xablau.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMaterial(Material material)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            _appDbContext.Material.Add(material);
+            _appDbContext.Materiais.Add(material);
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, material);
+            return CreatedAtAction(nameof(GetMaterial), new { id = material.Id }, material);
         }
 
         [HttpGet]
-        public async Task<ActionResult <IEnumerable<Material>>> GetMaterial()
+        public async Task<ActionResult<IEnumerable<Material>>> GetMaterial()
         {
-            var materiais = await _appDbContext.Material.ToListAsync();
-
+            var materiais = await _appDbContext.Materiais.ToListAsync();
             return Ok(materiais);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Material>> GetMaterial(int id)
         {
-            var material = await _appDbContext.Material.FindAsync(id);
+            var material = await _appDbContext.Materiais.FindAsync(id);
 
-            if (material == null) {
+            if (material == null)
+            {
                 return NotFound("Material não encontrado!");
             }
 
@@ -52,30 +53,35 @@ namespace Xablau.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMaterial(int id, [FromBody] Material materialAtualizado)
         {
-            var materialExistente = await _appDbContext.Material.FindAsync(id);
+            if (id != materialAtualizado.Id)
+            {
+                return BadRequest("ID da URL e do objeto não conferem.");
+            }
 
-            if (materialExistente == null) {
+            var materialExistente = await _appDbContext.Materiais.FindAsync(id);
+
+            if (materialExistente == null)
+            {
                 return NotFound("Material não encontrado!");
             }
 
             _appDbContext.Entry(materialExistente).CurrentValues.SetValues(materialAtualizado);
-
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, materialAtualizado);
+            return NoContent(); // 204: atualizado com sucesso, sem conteúdo para retornar
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMaterial(int id)
         {
-            var material = await _appDbContext.Material.FindAsync(id);
+            var material = await _appDbContext.Materiais.FindAsync(id);
 
-            if (material == null) {
+            if (material == null)
+            {
                 return NotFound("Material não encontrado!");
             }
 
-            _appDbContext.Remove(material);
-
+            _appDbContext.Materiais.Remove(material);
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Material mandado para a glória!");

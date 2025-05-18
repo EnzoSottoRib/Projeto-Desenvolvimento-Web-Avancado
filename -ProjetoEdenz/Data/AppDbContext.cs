@@ -13,15 +13,15 @@ public class AppDbContext : DbContext
     {
     }
 
-     public DbSet<Obra> Obra { get; set; }
-        public DbSet<Engenheiro> Engenheiro { get; set; }
-        public DbSet<Material> Material { get; set; }
-        public DbSet<Equipamento> Equipamento { get; set; }
-        public DbSet<Manutencao> Manutencao { get; set; }
-        public DbSet<Status> Status { get; set; }
-        public DbSet<TipoManutencao> TipoManutencao { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Trilho> Trilho { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Engenheiro> Engenheiros { get; set; }
+    public DbSet<Obra> Obras { get; set; }
+    public DbSet<Status> Status { get; set; }
+    public DbSet<Manutencao> Manutencoes { get; set; }
+    public DbSet<Material> Materiais { get; set; }
+    public DbSet<Equipamento> Equipamentos { get; set; }
+    public DbSet<Trilho> Trilhos { get; set; }
+    public DbSet<TipoManutencao> TiposManutencao { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

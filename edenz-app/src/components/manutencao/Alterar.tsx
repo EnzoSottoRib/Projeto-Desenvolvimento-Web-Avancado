@@ -1,79 +1,118 @@
-import React from 'react';
-import { useEffect ,useState } from 'react';
-import fotoMain from '../img/tremHome.png';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-// import "../css/Home.css";
 
-// interface Trilho {
-//     id?: number;
-//     nome: string;
-// }
-
+interface Manutencao {
+  id: number;
+  idObra: number;
+  idMaterial: number;
+  materialQtd: string;
+  idEquipamento: number;
+  equipamentoQtd: string;
+  idTrilho: number;
+  trilhoQtd: string;
+  descricao: string;
+  data: string;
+}
 
 function ManutencaoAlterar() {
-  // const { id } = useParams();
-  // const [trilho, setTrilho] = useState<Trilho | null>(null);
-  // const [nome, setNome] = useState("");
+  const { id } = useParams();
+  const [manutencao, setManutencao] = useState<Manutencao | null>(null);
 
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Manutencao>(`http://localhost:5178/api/manutencao/${id}`)
+        .then((res) => {
+          setManutencao(res.data);
+        })
+        .catch((err) => {
+          console.error('Erro ao buscar manutenção:', err);
+          alert('Erro ao buscar manutenção.');
+        });
+    }
+  }, [id]);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get<Trilho>(`http://localhost:5178/api/trilho/${id}`)
-  //       .then((resposta) => {
-  //         const trilhoData = resposta.data;
-  //         setTrilho(trilhoData);
-  //         setNome(trilhoData.nome);
-  //       })
-  //       .catch((erro) => {
-  //         console.error("Erro ao buscar trilhos:", erro);
-  //       });
-  //   }
-  // }, [id]);
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { id: fieldId, value } = e.target;
+    if (manutencao) {
+      setManutencao({ ...manutencao, [fieldId]: fieldId.includes('id') ? Number(value) : value });
+    }
+  }
 
-  // function enviarTrilho(e: any) {
-  //   e.preventDefault();
+  function enviarAtualizacao(e: React.FormEvent) {
+    e.preventDefault();
+    if (manutencao) {
+      axios
+        .put(`http://localhost:5178/api/manutencao/${id}`, manutencao)
+        .then((res) => {
+          console.log('Manutenção atualizada:', res.data);
+          alert('Manutenção atualizada com sucesso!');
+        })
+        .catch((err) => {
+          console.error('Erro ao atualizar manutenção:', err);
+          alert('Erro ao atualizar manutenção.');
+        });
+    }
+  }
 
-  //   const trilhoData: Trilho = {
-  //     id: Number(id),
-  //     nome
-  //   };
-
-  //   axios
-  //     .put(`http://localhost:5178/api/trilho/${id}`, trilhoData)
-  //     .then((resposta) => {
-  //       console.log("Trilho atualizado", resposta.data);
-  //       alert("Trilho Atualizado!!!")
-  //     })
-  //     .catch((erro) => {
-  //       console.error("Erro ao atualizar trilho", erro);
-  //     });
-  // }
-
-  // if (!trilho) return <div>Carregando...</div>; 
+  if (!manutencao) return <div>Carregando...</div>;
 
   return (
     <div className="form-container">
-      {/* <div className="form-header">
-        <h2>Editar Trilho</h2>
+      <div className="form-header">
+        <h2>Editar Manutenção</h2>
       </div>
-      <form onSubmit={enviarTrilho}>
+      <form onSubmit={enviarAtualizacao}>
         <div className="form-group">
-          <label htmlFor="nome">Nome</label>
-          <input
-            type="text"
-            id="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-          />
+          <label htmlFor="idObra">ID da Obra</label>
+          <input type="number" id="idObra" value={manutencao.idObra} onChange={handleChange} required />
         </div>
-       
+
+        <div className="form-group">
+          <label htmlFor="idMaterial">ID do Material</label>
+          <input type="number" id="idMaterial" value={manutencao.idMaterial} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="materialQtd">Quantidade de Material</label>
+          <input type="text" id="materialQtd" value={manutencao.materialQtd} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="idEquipamento">ID do Equipamento</label>
+          <input type="number" id="idEquipamento" value={manutencao.idEquipamento} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="equipamentoQtd">Quantidade de Equipamento</label>
+          <input type="text" id="equipamentoQtd" value={manutencao.equipamentoQtd} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="idTrilho">ID do Trilho</label>
+          <input type="number" id="idTrilho" value={manutencao.idTrilho} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="trilhoQtd">Quantidade de Trilho</label>
+          <input type="text" id="trilhoQtd" value={manutencao.trilhoQtd} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="descricao">Descrição</label>
+          <textarea id="descricao" value={manutencao.descricao} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="data">Data</label>
+          <input type="text" id="data" placeholder="dd/mm/aaaa" value={manutencao.data} onChange={handleChange} required />
+        </div>
+
         <button type="submit">Salvar Alterações</button>
-      </form> */}
+      </form>
     </div>
   );
 }
 
-export default ManutencaoAlterar
+export default ManutencaoAlterar;

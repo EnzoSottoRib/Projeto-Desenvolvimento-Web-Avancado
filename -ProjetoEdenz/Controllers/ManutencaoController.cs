@@ -2,8 +2,10 @@ using _ProjetoEdenz.Data;
 using _ProjetoEdenz.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-namespace _ProjetoEdenz.Controllers
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace _ProjetoEdenz.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -20,46 +22,47 @@ namespace _ProjetoEdenz.Controllers
         public async Task<IActionResult> AddManutencao(Manutencao manutencao)
         {
             var equipamentoExiste = await _appDbContext.Equipamentos
-                .AnyAsync(e => e.EquipamentoId == manutencao.EquipamentoId);
-            
+                .AnyAsync(e => e.Id == manutencao.IdEquipamento);
+
             if (!equipamentoExiste)
                 return BadRequest("Equipamento não encontrado!");
 
             foreach (var material in manutencao.Materiais)
             {
                 var materialExiste = await _appDbContext.Materiais
-                    .AnyAsync(m => m.MaterialId == material.MaterialId);
-                
+                    .AnyAsync(m => m.Id == material.Id);
+
                 if (!materialExiste)
-                    return BadRequest($"Material ID {material.MaterialId} não existe!");
+                    return BadRequest($"Material ID {material.Id} não existe!");
             }
 
-            _appDbContext.Manutencao.Add(manutencao);
+            _appDbContext.Manutencoes.Add(manutencao);
             await _appDbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetManutencaoById), new { id = manutencao.ManutencaoId }, manutencao);
+            return CreatedAtAction(nameof(GetManutencao), new { id = manutencao.Id }, manutencao);
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Manutencao>>> GetAllManutencoes()
         {
-            var manutencao = await _appDbContext.Manutencao
+            var manutencoes = await _appDbContext.Manutencoes
                 .Include(m => m.Equipamento)
-                .Include(m => m.Material)
+                .Include(m => m.Materiais)
                 .ToListAsync();
 
-            return Ok(manutencao);
+            return Ok(manutencoes);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Manutencao>> GetManutencao(int id)
         {
-            var manutencao = await _appDbContext.Manutencao
+            var manutencao = await _appDbContext.Manutencoes
                 .Include(m => m.Equipamento)
                 .Include(m => m.Materiais)
-                .FirstOrDefaultAsync(m => m.ManutencaoId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (manutencao == null) {
+            if (manutencao == null)
+            {
                 return NotFound("Manutenção não encontrada!");
             }
 
@@ -69,9 +72,13 @@ namespace _ProjetoEdenz.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateManutencao(int id, [FromBody] Manutencao manutencaoAtualizada)
         {
-            var manutencaoExistente = await _appDbContext.Manutencao.FindAsync(id);
+            if (id != manutencaoAtualizada.Id)
+                return BadRequest("ID da URL e do objeto não conferem.");
 
-            if (manutencaoExistente == null) {
+            var manutencaoExistente = await _appDbContext.Manutencoes.FindAsync(id);
+
+            if (manutencaoExistente == null)
+            {
                 return NotFound("Manutenção não encontrada!");
             }
 
@@ -79,20 +86,20 @@ namespace _ProjetoEdenz.Controllers
 
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, manutencaoAtualizada);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteManutencao(int id)
         {
-            var manutencao = await _appDbContext.Manutencao.FindAsync(id);
+            var manutencao = await _appDbContext.Manutencoes.FindAsync(id);
 
-            if (manutencao == null) {
+            if (manutencao == null)
+            {
                 return NotFound("Manutenção não encontrada!");
             }
 
-            _appDbContext.Remove(manutencao);
-
+            _appDbContext.Manutencoes.Remove(manutencao);
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Manutenção mandada para a glória!");

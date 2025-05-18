@@ -2,6 +2,7 @@ using _ProjetoEdenz.Data;
 using _ProjetoEdenz.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 namespace _ProjetoEdenz.Controllers
 {
     [ApiController]
@@ -18,30 +19,31 @@ namespace _ProjetoEdenz.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEngenheiro(Engenheiro engenheiro)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            _appDbContext.Engenheiro.Add(engenheiro);
+            _appDbContext.Engenheiros.Add(engenheiro);
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, engenheiro);
+            return CreatedAtAction(nameof(GetEngenheiro), new { id = engenheiro.Id }, engenheiro);
         }
 
         [HttpGet]
-        public async Task<ActionResult <IEnumerable<Engenheiro>>> GetEngenheiro()
+        public async Task<ActionResult<IEnumerable<Engenheiro>>> GetEngenheiro()
         {
-            var engenheiros = await _appDbContext.Engenheiro.ToListAsync();
-
+            var engenheiros = await _appDbContext.Engenheiros.ToListAsync();
             return Ok(engenheiros);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Engenheiro>> GetEngenheiro(int id)
         {
-            var engenheiro = await _appDbContext.Engenheiro.FindAsync(id);
+            var engenheiro = await _appDbContext.Engenheiros.FindAsync(id);
 
-            if (engenheiro == null) {
+            if (engenheiro == null)
+            {
                 return NotFound("Engenheiro não encontrado!");
             }
 
@@ -51,30 +53,35 @@ namespace _ProjetoEdenz.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEngenheiro(int id, [FromBody] Engenheiro engenheiroAtualizado)
         {
-            var engenheiroExistente = await _appDbContext.Engenheiro.FindAsync(id);
+            if (id != engenheiroAtualizado.Id)
+            {
+                return BadRequest("ID da URL e do objeto não conferem.");
+            }
 
-            if (engenheiroExistente == null) {
+            var engenheiroExistente = await _appDbContext.Engenheiros.FindAsync(id);
+
+            if (engenheiroExistente == null)
+            {
                 return NotFound("Engenheiro não encontrado!");
             }
 
             _appDbContext.Entry(engenheiroExistente).CurrentValues.SetValues(engenheiroAtualizado);
-
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, engenheiroAtualizado);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEngenheiro(int id)
         {
-            var engenheiro = await _appDbContext.Engenheiro.FindAsync(id);
+            var engenheiro = await _appDbContext.Engenheiros.FindAsync(id);
 
-            if (engenheiro == null) {
+            if (engenheiro == null)
+            {
                 return NotFound("Engenheiro não encontrado!");
             }
 
-            _appDbContext.Remove(engenheiro);
-
+            _appDbContext.Engenheiros.Remove(engenheiro);
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Engenheiro mandado para a glória!");

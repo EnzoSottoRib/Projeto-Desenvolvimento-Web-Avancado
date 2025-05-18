@@ -17,33 +17,33 @@ namespace _ProjetoEdenz.Controllers
         }
 
         [HttpPost]
-        
         public async Task<IActionResult> AddEquipamento(Equipamento equipamento)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            _appDbContext.Equipamento.Add(equipamento);
+            _appDbContext.Equipamentos.Add(equipamento);
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, equipamento);
+            return CreatedAtAction(nameof(GetEquipamento), new { id = equipamento.Id }, equipamento);
         }
 
         [HttpGet]
-        public async Task<ActionResult <IEnumerable<Equipamento>>> GetEquipamento()
+        public async Task<ActionResult<IEnumerable<Equipamento>>> GetEquipamento()
         {
-            var equipamentos = await _appDbContext.Equipamento.ToListAsync();
-
+            var equipamentos = await _appDbContext.Equipamentos.ToListAsync();
             return Ok(equipamentos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Equipamento>> GetEquipamento(int id)
         {
-            var equipamento = await _appDbContext.Equipamento.FindAsync(id);
+            var equipamento = await _appDbContext.Equipamentos.FindAsync(id);
 
-            if (equipamento == null) {
+            if (equipamento == null)
+            {
                 return NotFound("Equipamento não encontrado!");
             }
 
@@ -53,30 +53,35 @@ namespace _ProjetoEdenz.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEquipamento(int id, [FromBody] Equipamento equipamentoAtualizado)
         {
-            var equipamentoExistente = await _appDbContext.Equipamento.FindAsync(id);
+            if (id != equipamentoAtualizado.Id)
+            {
+                return BadRequest("ID da URL e do objeto não conferem.");
+            }
 
-            if (equipamentoExistente == null) {
+            var equipamentoExistente = await _appDbContext.Equipamentos.FindAsync(id);
+
+            if (equipamentoExistente == null)
+            {
                 return NotFound("Equipamento não encontrado!");
             }
 
             _appDbContext.Entry(equipamentoExistente).CurrentValues.SetValues(equipamentoAtualizado);
-
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, equipamentoAtualizado);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEquipamento(int id)
         {
-            var equipamento = await _appDbContext.Equipamento.FindAsync(id);
+            var equipamento = await _appDbContext.Equipamentos.FindAsync(id);
 
-            if (equipamento == null) {
+            if (equipamento == null)
+            {
                 return NotFound("Equipamento não encontrado!");
             }
 
-            _appDbContext.Remove(equipamento);
-
+            _appDbContext.Equipamentos.Remove(equipamento);
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Equipamento mandado para a glória!");

@@ -11,33 +11,45 @@ interface Trilho {
 
 
 function TrilhoAdicionar() {
+
   const [trilhos, setTrilhos] = useState<Trilho[]>([]);
   const [nome, setNome] = useState("");
 
-
   function enviarTrilho(e: React.FormEvent) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const trilho: Trilho = {
-      nome,
-    };
+  const trilho: Trilho = {
+    nome: nome,
+  };
 
-            fetch("http://localhost:5178/api/trilho", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(trilho),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Trilho cadastrado:", data);
-            alert("Trilho Cadastrado");
-        })
-        .catch((error) => {
-            console.error("Erro ao cadastrar trilho!", error);
-        });
-  }
+  fetch("http://localhost:5178/api/trilho", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(trilho),
+  })
+  .then(async (response) => {
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Erros de validação:", errorData.errors);
+      alert(`Erro ao cadastrar: ${JSON.stringify(errorData.errors)}`);
+      return;
+    }
+    return response.json();
+  })
+  .then((data) => {
+    if (data) {
+      console.log("Trilho cadastrado:", data);
+      alert("Trilho Cadastrado");
+      setNome(""); // Limpa o campo após cadastro
+    }
+  })
+  .catch((error) => {
+    console.error("Erro ao cadastrar trilho!", error);
+    alert("Erro ao conectar com o servidor");
+  });
+}
 
   return (
     <div className="form-container">
