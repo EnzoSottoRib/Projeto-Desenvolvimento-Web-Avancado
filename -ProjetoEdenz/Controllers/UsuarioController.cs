@@ -1,5 +1,6 @@
 using _ProjetoEdenz.Data;
 using _ProjetoEdenz.Models;
+using BCrypt.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,18 +17,29 @@ namespace _ProjetoEdenz.Controllers
             _appDbContext = appDbContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddUsuario(Usuario usuario)
-        {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+    [HttpPost]
+    public async Task<IActionResult> PostUsuario([FromBody] Usuario usuario)
+    {
+    if (string.IsNullOrWhiteSpace(usuario.Senha))
+    {
+        return BadRequest("A senha não pode estar vazia.");
+    }
 
-            _appDbContext.Usuarios.Add(usuario);
-            await _appDbContext.SaveChangesAsync();
+    var existente = await _appDbContext.Usuarios.FirstOrDefaultAsync(u => u.Email == usuario.Email);
+    if (existente != null)
+    {
+        return BadRequest("Este e-mail já está em uso.");
+    }
 
-            return StatusCode(201, usuario);
-        }
+    // Gera a senha criptografada diretamente sem necessidade de criar um salt separado
+    usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+
+    _appDbContext.Usuarios.Add(usuario);
+    await _appDbContext.SaveChangesAsync();
+
+    return Ok("Usuário cadastrado com sucesso.");
+}
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()

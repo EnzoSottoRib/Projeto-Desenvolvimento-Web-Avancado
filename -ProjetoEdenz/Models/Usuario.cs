@@ -18,7 +18,7 @@ namespace _ProjetoEdenz.Models
         public required string Email { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(30, ErrorMessage = "A senha precisa ter no máximo 30 caracteres.")]
+        [MaxLength(70, ErrorMessage = "A senha precisa ter no máximo 30 caracteres.")]
         [MinLength(8, ErrorMessage = "A senha precisa ter no mínimo 8 caracteres.")]  
         public required string Senha { get; set; }
 

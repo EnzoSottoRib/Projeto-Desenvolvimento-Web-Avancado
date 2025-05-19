@@ -131,3 +131,4 @@ C:\Users\enzon\OneDrive\Documentos\Faculdade\Gus\GusPull\Projeto-Desenvolvimento
 C:\Users\enzon\OneDrive\Documentos\Faculdade\Gus\GusPull\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.pdb
 C:\Users\enzon\OneDrive\Documentos\Faculdade\Gus\GusPull\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\-ProjetoEdenz.genruntimeconfig.cache
 C:\Users\enzon\OneDrive\Documentos\Faculdade\Gus\GusPull\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\obj\Debug\net8.0\ref\-ProjetoEdenz.dll
+c:\Users\Eduardo\Desktop\ProjetoSoftwareVisual - projeto\Projeto-Desenvolvimento-Web-Avancado\-ProjetoEdenz\bin\Debug\net8.0\BCrypt.Net-Next.dll

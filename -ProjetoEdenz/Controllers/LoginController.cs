@@ -17,18 +17,23 @@ namespace Xablau.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginDTO usuarioLogin)
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-            if (string.IsNullOrEmpty(usuarioLogin.Email) || string.IsNullOrEmpty(usuarioLogin.Senha))
+            if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Senha))
                 return BadRequest("Email e senha são obrigatórios.");
 
             var usuario = await _appDbContext.Usuarios
-                .FirstOrDefaultAsync(u => u.Email == usuarioLogin.Email && u.Senha == usuarioLogin.Senha);
+                .FirstOrDefaultAsync(u => u.Email == login.Email);
 
             if (usuario == null)
                 return Unauthorized("Email ou senha inválidos.");
 
-            // aqui você pode retornar o usuário ou token, por enquanto retorno básico
+            // Verifica a senha usando BCrypt
+            bool senhaValida = BCrypt.Net.BCrypt.Verify(login.Senha, usuario.Senha);
+
+            if (!senhaValida)
+                return Unauthorized("Email ou senha inválidos.");
+
             return Ok(new
             {
                 usuario.Id,
@@ -36,6 +41,8 @@ namespace Xablau.Controllers
                 usuario.Email
             });
         }
+
+
 
        
     }
