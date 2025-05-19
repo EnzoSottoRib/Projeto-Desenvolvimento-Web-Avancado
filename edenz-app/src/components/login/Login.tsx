@@ -2,85 +2,65 @@ import { useEffect ,useState } from 'react';
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import "../../css/Login.css";
 
-interface Usuario {
-  id: number;
-  nome: string;
-  cpf: string;
+interface LoginDTO {
   email: string;
   senha: string;
-  tipo: number; 
 }
 
 function Login(){
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [usuarioEnviar, setUsuarioEnviar] = useState("");
-  const [email, setEmail] = useState("");
+   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [id, setId] = useState(0);
+  const [erro, setErro] = useState("");
   const navigate = useNavigate();
 
   
 
-  useEffect(() => {
-    // Simulação de uma chamada à API para buscar os usuários cadastrados
-    fetch("http://localhost:5104/api/usuario/listar") // Altere para a URL correta da sua API
-      .then((response) => response.json())
-      .then((data) => setUsuarios(data))
-      .catch((error) => console.error("Erro ao buscar usuários:", error));
-  }, []);
+  const verificarLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    function enviarEmail(e: React.FormEvent) {
-      e.preventDefault();
+    const usuario: LoginDTO = {
+      email,
+      senha,
+    };
 
-      if (email === '') {
-        alert("Preencha todos os campos");
-        return;
-      }
-
-      const templateParams = {
-        from_name: "Sistema De Denúncias Ambientais(SDA)",
-        email: email
-      } 
-
-    }
-
-
-    function verificarCadastro(e: React.FormEvent) {
-      e.preventDefault();
-
-      let usuarioEncontrado = false;
-
-     
-    
-      usuarios.forEach((usuario) => {
-        if (usuario.email === email && usuario.senha === senha) {
-          usuarioEncontrado = true;
-          setId(usuario.id);
-          // setUsuarioEnviar(usuario);
-          console.log("Usuario: " + id)
-        }
+    try {
+      const response = await fetch("http://localhost:5178/api/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(usuario),
       });
-    
-      if (usuarioEncontrado) {
-        // alert("Login bem-sucedido!");
-        //  <Link to={`/denuncia/${id}`} className="btn-link">
-                                    
-        //                          </Link>
-        console.log("ID denuncia: " + id);
-        navigate(`/denuncia/${id}`);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Aqui você pode salvar o token ou dados no localStorage
+        // Exemplo: localStorage.setItem("usuario", JSON.stringify(data));
+        // Se seu backend retornar token, faça localStorage.setItem("token", token);
+
+        localStorage.setItem("usuario", JSON.stringify(data));
+
+        alert("Login realizado com sucesso!");
+        navigate("/home"); // redireciona para a página home
       } else {
-        alert("Email ou senha incorretos!");
+        const erroMsg = await response.text();
+        setErro(erroMsg || "Email ou senha inválidos.");
+        alert("Email ou senha inválidos!");
       }
+    } catch (err) {
+      setErro("Erro na comunicação com o servidor.");
+      alert("Eddo não esperado, reinicie a página!");
+      console.error(err);
     }
+  };
 
     
     
     return <div className="login-container">
     <button className="back-button"><Link to ="/" style={{ textDecoration: "none", color: 'black'}}>← Voltar</Link></button>
-    {/* <img src={fotoLogo} alt="Sistema de Denúncias Ambientais" className="login-logo" /> */}
     
-    <form onSubmit={verificarCadastro}>
+    <form onSubmit={verificarLogin}>
     <h2>Login de Usuário</h2>
 
     <div className="input-container">
@@ -108,9 +88,9 @@ function Login(){
     
 
     <button className="btn login" >LOGIN</button>
-    </form>
-    <button className="btn register"><Link to ="/cadastro" style={{ textDecoration: "none", color: 'black'}}>Cadastrar</Link></button>
-    <form onSubmit={enviarEmail}>
+  
+    <button className="btn register"><Link to ="/usuario/cadastrar" style={{ textDecoration: "none", color: 'black'}}>Cadastrar</Link></button>
+
     
     <button style={{ backgroundColor: "black"}}>Esqueceu sua senha?</button>
     </form>

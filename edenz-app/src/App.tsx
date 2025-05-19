@@ -30,6 +30,7 @@ import ObraAlterar from './components/obra/Alterar';
 import StatusAlterar from './components/status/Alterar';
 import UsuarioAlterar from './components/usuario/Alterar';
 import Login from './components/login/Login';
+import Cadastro from './components/login/Cadastro';
 
 
 function App() {
@@ -116,6 +117,9 @@ function App() {
     <Routes>
         {/* Raiz = Login */}
         <Route path="/" element={<Login/>}></Route>
+
+        {/* Cadastro */}
+        <Route path="/usuario/cadastrar" element={<Cadastro/>}></Route>
 
         {/* Home */}
         <Route path="/home" element={<Home/>}></Route>

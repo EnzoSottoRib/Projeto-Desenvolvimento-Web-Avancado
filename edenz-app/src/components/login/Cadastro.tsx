@@ -1,76 +1,69 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import fotoLogo from "../img/logoHome.jpg";
 import React from "react";
+import fotoTrem from '../../img/trem.jpg';
 
 interface Usuario {
+  id?: number;
   nome: string;
-  cpf: string;
   email: string;
   senha: string;
-  tipo: number; 
+  cpf: string
 }
 
 function Cadastro() {
   const [nome, setNome] = useState("");
-  const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [repetirSenha, setRepetirSenha] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [mensagem, setMensagem] = useState("");
 
-  const [errors, setErrors] = useState({
-    nome: "",
-    cpf: "",
-    email: "",
-    senha: "",
-    repetirSenha: "",
-  });
-
-  
-
-  function cadastrarUsuario(e: any) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    let novoErro = {
-      nome: nome ? "" : "Nome é obrigatório!",
-      cpf: cpf ? "" : "CPF é obrigatório!",
-      email: email ? "" : "E-mail é obrigatório!",
-      senha: senha ? "" : "Senha é obrigatória!",
-      repetirSenha: repetirSenha
-        ? senha === repetirSenha
-          ? ""
-          : "As senhas não coincidem!"
-        : "Confirmação de senha é obrigatória!",
-    };
-
-    setErrors(novoErro);
-
-    // Se algum campo estiver vazio, não envia o formulário
-    if (Object.values(novoErro).some((msg) => msg !== "")) {
+    if (senha !== confirmarSenha) {
+      setMensagem("As senhas não coincidem.");
+      alert(mensagem)
       return;
     }
 
-    const usuario: Usuario = {
-      nome: nome,
-      cpf: cpf,
-      email: email,
-      senha: senha,
-      tipo: 0
+    const novoUsuario: Usuario = {
+      nome,
+      email,
+      senha,
+      cpf,
     };
 
-    fetch("http://localhost:5104/api/usuario/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(usuario),
-    })
-      .then((resposta) => resposta.json())
-      .then((usuario) => {
-        console.log("Usuário cadastrado", usuario);
-        alert("Usuário cadastrado com sucesso!");
+    try {
+      const response = await fetch("http://localhost:5178/api/usuario", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(novoUsuario),
       });
-  }
+
+      if (response.ok) {
+        setMensagem("Usuário cadastrado com sucesso!");
+        setNome("");
+        setEmail("");
+        setSenha("");
+        setConfirmarSenha("");
+        setCpf("");
+        alert(mensagem);
+      } else {
+        const erroMsg = await response.text();
+        setMensagem(`Erro: ${erroMsg}`);
+        alert(mensagem);
+      }
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      setMensagem("Erro na comunicação com o servidor.");
+      alert(mensagem);
+    }
+  };
+
 
   return (
     <div className="login-container">
@@ -80,12 +73,13 @@ function Cadastro() {
         </Link>
       </button>
       <img
-        src={fotoLogo}
+        src={fotoTrem}
         alt="Sistema de Denúncias Ambientais"
         className="cadastro-logo"
+        width={380}
       />
 
-      <form onSubmit={cadastrarUsuario}>
+      <form onSubmit={handleSubmit}>
         <h2>Cadastro de Usuário</h2>
 
         <div className="input-container">
@@ -97,21 +91,19 @@ function Cadastro() {
             name="nome"
             onChange={(e) => setNome(e.target.value)}
           />
-          {errors.nome && <span className="error">{errors.nome}</span>}
         </div>
-
         <div className="input-container">
-          <label>CPF</label>
+          <label>Cpf</label>
           <input
-            placeholder="Digite seu CPF"
+            placeholder="Digite seu Cpf"
             type="text"
             id="cpf"
             name="cpf"
             onChange={(e) => setCpf(e.target.value)}
           />
-          {errors.cpf && <span className="error">{errors.cpf}</span>}
         </div>
 
+       
         <div className="input-container">
           <label>Email</label>
           <input
@@ -121,7 +113,6 @@ function Cadastro() {
             name="email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <span className="error">{errors.email}</span>}
         </div>
 
         <div className="input-container">
@@ -133,7 +124,6 @@ function Cadastro() {
             name="senha"
             onChange={(e) => setSenha(e.target.value)}
           />
-          {errors.senha && <span className="error">{errors.senha}</span>}
         </div>
 
         <div className="input-container">
@@ -141,11 +131,8 @@ function Cadastro() {
           <input
             type="password"
             placeholder="Digite sua Senha Novamente"
-            onChange={(e) => setRepetirSenha(e.target.value)}
+            onChange={(e) => setConfirmarSenha(e.target.value)}
           />
-          {errors.repetirSenha && (
-            <span className="error">{errors.repetirSenha}</span>
-          )}
         </div>
 
         <button type="submit" className="btn register">
