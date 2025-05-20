@@ -12,12 +12,11 @@ function EquipamentoAdicionar() {
   const [equipamentos, setEquipamentos] = useState<Equipamento[]>([]);
   const [nome, setNome] = useState("");
 
-
   function enviarEquipamento(e: React.FormEvent) {
     e.preventDefault();
 
     const equipamento: Equipamento = {
-      nome,
+      nome: nome,
     };
 
         fetch("http://localhost:5178/api/equipamento", {
@@ -27,10 +26,21 @@ function EquipamentoAdicionar() {
         },
         body: JSON.stringify(equipamento),
         })
-        .then((response) => response.json())
+        .then(async (response) => {
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Erros de validação:", errorData.errors);
+            alert(`Erro ao cadastrar: ${JSON.stringify(errorData.errors)}`);
+            return;
+          }
+          return response.json();
+        })
         .then((data) => {
+          if (data) {
             console.log("Equipamento cadastrado:", data);
             alert("Equipamento Cadastrado");
+            setNome("");
+          }
         })
         .catch((error) => {
             console.error("Erro ao cadastrar equipamento!", error);

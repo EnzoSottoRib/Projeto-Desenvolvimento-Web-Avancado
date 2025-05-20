@@ -9,7 +9,6 @@ interface Trilho {
     nome: string;
 }
 
-
 function TrilhoAdicionar() {
 
   const [trilhos, setTrilhos] = useState<Trilho[]>([]);
