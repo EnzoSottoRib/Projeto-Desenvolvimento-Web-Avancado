@@ -3,61 +3,61 @@ import { useEffect ,useState } from 'react';
 import fotoMain from '../img/tremHome.png';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-// import "../css/Home.css";
+//import "../css/Home.css";
 
-// interface Trilho {
-//     id?: number;
-//     nome: string;
-// }
+interface Material {
+    id?: number;
+    nome: string;
+}
 
 
 function MaterialAlterar() {
-  // const { id } = useParams();
-  // const [trilho, setTrilho] = useState<Trilho | null>(null);
-  // const [nome, setNome] = useState("");
+  const { id } = useParams();
+  const [material, setMaterial] = useState<Material | null>(null);
+  const [nome, setNome] = useState("");
 
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get<Trilho>(`http://localhost:5178/api/trilho/${id}`)
-  //       .then((resposta) => {
-  //         const trilhoData = resposta.data;
-  //         setTrilho(trilhoData);
-  //         setNome(trilhoData.nome);
-  //       })
-  //       .catch((erro) => {
-  //         console.error("Erro ao buscar trilhos:", erro);
-  //       });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Material>(`http://localhost:5178/api/material/${id}`)
+        .then((resposta) => {
+          const trilhoData = resposta.data;
+          setMaterial(trilhoData);
+          setNome(trilhoData.nome);
+        })
+        .catch((erro) => {
+          console.error("Erro ao buscar materiais!", erro);
+        });
+    }
+  }, [id]);
 
-  // function enviarTrilho(e: any) {
-  //   e.preventDefault();
+  function enviarTrilho(e: any) {
+    e.preventDefault();
 
-  //   const trilhoData: Trilho = {
-  //     id: Number(id),
-  //     nome
-  //   };
+    const materialData: Material = {
+      id: Number(id),
+      nome
+    };
 
-  //   axios
-  //     .put(`http://localhost:5178/api/trilho/${id}`, trilhoData)
-  //     .then((resposta) => {
-  //       console.log("Trilho atualizado", resposta.data);
-  //       alert("Trilho Atualizado!!!")
-  //     })
-  //     .catch((erro) => {
-  //       console.error("Erro ao atualizar trilho", erro);
-  //     });
-  // }
+    axios
+      .put(`http://localhost:5178/api/material/${id}`, materialData)
+      .then((resposta) => {
+        console.log("Material atualizado", resposta.data);
+        alert("Material Atualizado!!!")
+      })
+      .catch((erro) => {
+        console.error("Erro ao atualizar material", erro);
+      });
+  }
 
-  // if (!trilho) return <div>Carregando...</div>; 
+  if (!material) return <div>Carregando...</div>; 
 
    return (
     
     <div className="form-container">
-      {/* <div className="form-header">
-        <h2>Editar Trilho</h2>
+      <div className="form-header">
+        <h2>Editar Material</h2>
       </div>
       <form onSubmit={enviarTrilho}>
         <div className="form-group">
@@ -72,7 +72,7 @@ function MaterialAlterar() {
         </div>
        
         <button type="submit">Salvar Alterações</button>
-      </form> */}
+      </form>
     </div>
    );
 }

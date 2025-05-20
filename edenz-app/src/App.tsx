@@ -31,6 +31,7 @@ import StatusAlterar from './components/status/Alterar';
 import UsuarioAlterar from './components/usuario/Alterar';
 import Login from './components/login/Login';
 import Cadastro from './components/login/Cadastro';
+import Autenticar from './components/autenticacao/Autenticar';
 
 
 function App() {
@@ -114,54 +115,62 @@ function App() {
         </nav>
     </header>
    
-    <Routes>
-        {/* Raiz = Login */}
-        <Route path="/" element={<Login/>}></Route>
+   <Routes>
+    {/* Raiz = Login */}
+    <Route path="/" element={<Login />} />
 
-        {/* Cadastro */}
-        <Route path="/usuario/cadastrar" element={<Cadastro/>}></Route>
+    {/* Cadastro */}
+    <Route path="/usuario/cadastrar" element={<Cadastro />} />
 
-        {/* Home */}
-        <Route path="/home" element={<Home/>}></Route>
+    {/* Home */}
+    <Route path="/home" element={<Autenticar><Home /></Autenticar>} />
 
-        {/* trilho */}
-        <Route path="/listar/trilho" element={<TrilhoListar/>}></Route>
-        <Route path="/adicionar/trilho" element={<TrilhoAdicionar/>}></Route>
-         <Route path="/editar/trilho/:id" element={<TrilhoAlterar/>}></Route>  
-        {/* material */}
-        <Route path="/listar/material" element={<MaterialListar/>}></Route>
-        <Route path="/adicionar/material" element={<MaterialAdicionar/>}></Route>
-        <Route path="/editar/material/:id" element={<MaterialAlterar/>}></Route>  
-        {/* equipamento */}
-        <Route path="/listar/equipamento" element={<EquipamentoListar/>}></Route>
-        <Route path="/adicionar/equipamento" element={<EquipamentoAdicionar/>}></Route>
-        <Route path="/editar/equipamento/:id" element={<EquipamentoAlterar/>}></Route>  
-        {/* Tipo de manutenção */}
-        <Route path="/listar/tipomanutencao" element={<TipoManutencaoListar/>}></Route>
-        <Route path="/adicionar/tipomanutencao" element={<TipoManutencaoAdicionar/>}></Route>
-        <Route path="/editar/tipomanutencao/:id" element={<TipoManutencaoAlterar/>}></Route>  
-        {/* Manutenção */}
-        <Route path="/listar/manutencao" element={<ManutencaoListar/>}></Route>
-        <Route path="/adicionar/manutencao" element={<ManutencaoAdicionar/>}></Route>
-        <Route path="/editar/manutencao/:id" element={<ManutencaoAlterar/>}></Route>  
-        {/* Engenheiro */}
-        <Route path="/listar/engenheiro" element={<EngenheiroListar/>}></Route>
-        <Route path="/adicionar/engenheiro" element={<EngenheiroAdicionar/>}></Route>
-        <Route path="/editar/engenheiro/:id" element={<EngenheiroAlterar/>}></Route>  
-        {/* Obra */}
-        <Route path="/listar/obra" element={<ObraListar/>}></Route>
-        <Route path="/adicionar/obra" element={<ObraAdicionar/>}></Route>
-        <Route path="/editar/obra/:id" element={<ObraAlterar/>}></Route>  
-        {/* Status */}
-        <Route path="/listar/status" element={<StatusListar/>}></Route>
-        <Route path="/adicionar/status" element={<StatusAdicionar/>}></Route>
-        <Route path="/editar/status/:id" element={<StatusAlterar/>}></Route>  
-        {/* Usuario */}
-        <Route path="/listar/usuario" element={<UsuarioListar/>}></Route>
-        <Route path="/adicionar/usuario" element={<UsuarioAdicionar/>}></Route>
-        <Route path="/editar/usuario/:id" element={<UsuarioAlterar/>}></Route>  
+    {/* trilho */}
+    <Route path="/listar/trilho" element={<Autenticar><TrilhoListar /></Autenticar>} />
+    <Route path="/adicionar/trilho" element={<Autenticar><TrilhoAdicionar /></Autenticar>} />
+    <Route path="/editar/trilho/:id" element={<Autenticar><TrilhoAlterar /></Autenticar>} />
 
-    </Routes>
+    {/* material */}
+    <Route path="/listar/material" element={<Autenticar><MaterialListar /></Autenticar>} />
+    <Route path="/adicionar/material" element={<Autenticar><MaterialAdicionar /></Autenticar>} />
+    <Route path="/editar/material/:id" element={<Autenticar><MaterialAlterar /></Autenticar>} />
+
+    {/* equipamento */}
+    <Route path="/listar/equipamento" element={<Autenticar><EquipamentoListar /></Autenticar>} />
+    <Route path="/adicionar/equipamento" element={<Autenticar><EquipamentoAdicionar /></Autenticar>} />
+    <Route path="/editar/equipamento/:id" element={<Autenticar><EquipamentoAlterar /></Autenticar>} />
+
+    {/* Tipo de manutenção */}
+    <Route path="/listar/tipomanutencao" element={<Autenticar><TipoManutencaoListar /></Autenticar>} />
+    <Route path="/adicionar/tipomanutencao" element={<Autenticar><TipoManutencaoAdicionar /></Autenticar>} />
+    <Route path="/editar/tipomanutencao/:id" element={<Autenticar><TipoManutencaoAlterar /></Autenticar>} />
+
+    {/* Manutenção */}
+    <Route path="/listar/manutencao" element={<Autenticar><ManutencaoListar /></Autenticar>} />
+    <Route path="/adicionar/manutencao" element={<Autenticar><ManutencaoAdicionar /></Autenticar>} />
+    <Route path="/editar/manutencao/:id" element={<Autenticar><ManutencaoAlterar /></Autenticar>} />
+
+    {/* Engenheiro */}
+    <Route path="/listar/engenheiro" element={<Autenticar><EngenheiroListar /></Autenticar>} />
+    <Route path="/adicionar/engenheiro" element={<Autenticar><EngenheiroAdicionar /></Autenticar>} />
+    <Route path="/editar/engenheiro/:id" element={<Autenticar><EngenheiroAlterar /></Autenticar>} />
+
+    {/* Obra */}
+    <Route path="/listar/obra" element={<Autenticar><ObraListar /></Autenticar>} />
+    <Route path="/adicionar/obra" element={<Autenticar><ObraAdicionar /></Autenticar>} />
+    <Route path="/editar/obra/:id" element={<Autenticar><ObraAlterar /></Autenticar>} />
+
+    {/* Status */}
+    <Route path="/listar/status" element={<Autenticar><StatusListar /></Autenticar>} />
+    <Route path="/adicionar/status" element={<Autenticar><StatusAdicionar /></Autenticar>} />
+    <Route path="/editar/status/:id" element={<Autenticar><StatusAlterar /></Autenticar>} />
+
+    {/* Usuario */}
+    <Route path="/listar/usuario" element={<Autenticar><UsuarioListar /></Autenticar>} />
+    <Route path="/adicionar/usuario" element={<Autenticar><UsuarioAdicionar /></Autenticar>} />
+    <Route path="/editar/usuario/:id" element={<Autenticar><UsuarioAlterar /></Autenticar>} />
+</Routes>
+
     </BrowserRouter>
    </div>
   );
