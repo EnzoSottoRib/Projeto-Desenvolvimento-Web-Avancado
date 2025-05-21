@@ -26,6 +26,12 @@ function EngenheiroAdicionar() {
   function enviarEngenheiro(e: React.FormEvent) {
     e.preventDefault();
 
+    const engenheiroParaEnviar = {
+      ...engenheiro,
+      DataNascimento: engenheiro.dataNascimento,
+      RegistroCREA: engenheiro.registroCREA
+    };
+
     fetch('http://localhost:5178/api/engenheiro', {
       method: 'POST',
       headers: {
