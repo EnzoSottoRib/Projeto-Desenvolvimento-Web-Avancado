@@ -5,7 +5,7 @@ namespace _ProjetoEdenz.Models
     public class Status
     {
         [Key]
-        public required int Id { get; set; }
+        public int Id { get; set; }
         
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(50, ErrorMessage = "O nome precisa ter no máximo 50 caracteres.")]
