@@ -68,7 +68,7 @@ function Cadastro() {
   return (
     <div className="login-container">
       <button className="back-button">
-        <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           ← Voltar
         </Link>
       </button>

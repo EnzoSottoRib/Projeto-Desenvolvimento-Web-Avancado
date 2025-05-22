@@ -35,10 +35,6 @@ function Login(){
       if (response.ok) {
         const data = await response.json();
 
-        // Aqui você pode salvar o token ou dados no localStorage
-        // Exemplo: localStorage.setItem("usuario", JSON.stringify(data));
-        // Se seu backend retornar token, faça localStorage.setItem("token", token);
-
         localStorage.setItem("usuario", JSON.stringify(data));
 
         alert("Login realizado com sucesso!");

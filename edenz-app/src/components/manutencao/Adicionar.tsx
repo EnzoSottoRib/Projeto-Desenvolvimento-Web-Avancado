@@ -1,7 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+interface Equipamento {
+    id?: number;
+    nome: string;
+}
+
+interface Material {
+    id?: number;
+    nome: string;
+}
+
+interface Obra {
+    id?: number;
+    IdUsuario: number; 
+    IdEngenheiro: number;  
+    IdStatus: number;  
+    Nome: string; 
+    Localização: string;  
+    DataInicio: string;
+    DataFim : string;
+    CustoPrevisto: number; 
+    CustoReal : number; 
+    Complexidade: string;
+    ImpactoAmbiental : string;
+    Descricao : string;
+}
+
+
 interface Manutencao {
+   id?: number;
   idObra: number;
   idMaterial: number;
   materialQtd: string;
@@ -14,20 +42,67 @@ interface Manutencao {
 }
 
 function ManutencaoAdicionar() {
-  const [manutencao, setManutencao] = useState<Manutencao>({
-    idObra: 0,
-    idMaterial: 0,
-    materialQtd: '',
-    idEquipamento: 0,
-    equipamentoQtd: '',
-    idTrilho: 0,
-    trilhoQtd: '',
-    descricao: '',
-    data: '',
-  });
+  const [obras, setObras] = useState<Obra[]>([]);
+  const [materias, setMateriais] = useState<Material[]>([]);
+  const [equipamentos, setEquipamentos] = useState<Equipamento[]>([]);
+  const [nome, setNome] = useState("");
+  const [materialQtd, setMaterialQtd] = useState("");
+  const [equipamentoQtd, setEquipamentoQtd] = useState("");
+  const [trilhoQtd, setTrilhoQtd] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [data, setData] = useState("");
+  const [obraId, setObraId] = useState<number>(0);
+  const [materialId, setMaterialId] = useState<number>(0);
+  const [equipamentoId, setEquipamentoId] = useState<number>(0);
+  const [trilhoId, setTrilhoId] = useState<number>(0);
+
+  useEffect(() => {
+    axios
+      .get<Obra[]>("http://localhost:5020/api/obra/listar")
+      .then((resposta) => {
+        setObras(resposta.data);
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar obras!", erro);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get<Material[]>("http://localhost:5020/api/material/listar")
+      .then((resposta) => {
+        setMateriais(resposta.data);
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar materiais!", erro);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get<Equipamento[]>("http://localhost:5020/api/equipamento/listar")
+      .then((resposta) => {
+        setEquipamentos(resposta.data);
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar equipamentos!", erro);
+      });
+  }, []);
 
   function enviarManutencao(e: React.FormEvent) {
     e.preventDefault();
+
+    const manutencao: Manutencao = {
+      idObra: Number(obraId),
+      idMaterial: Number(materialId),
+      materialQtd, 
+      idEquipamento: Number(equipamentoId), 
+      equipamentoQtd, 
+      idTrilho: Number(equipamentoId),  
+      trilhoQtd, 
+      descricao, 
+      data,
+    }
 
     axios
       .post('http://localhost:5178/api/manutencao', manutencao)
@@ -41,18 +116,13 @@ function ManutencaoAdicionar() {
       });
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { id, value } = e.target;
-    setManutencao({ ...manutencao, [id]: value });
-  }
-
   return (
     <div className="form-container">
       <div className="form-header">
         <h2>Cadastro de Manutenção</h2>
       </div>
       <form onSubmit={enviarManutencao}>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="idObra">ID da Obra</label>
           <input type="number" id="idObra" value={manutencao.idObra} onChange={handleChange} required />
         </div>
@@ -97,7 +167,7 @@ function ManutencaoAdicionar() {
           <input type="text" id="data" placeholder="dd/mm/aaaa" value={manutencao.data} onChange={handleChange} required />
         </div>
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Cadastrar</button> */}
       </form>
 
       <footer>

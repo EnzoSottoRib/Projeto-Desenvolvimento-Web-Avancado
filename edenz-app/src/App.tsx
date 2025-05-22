@@ -101,7 +101,6 @@ function App() {
                     <span className="dropdown-label">Usuario</span>
                     <ul className="dropdown-menu">
                         <li><Link to="/listar/usuario">Listar</Link></li>
-                        <li><Link to="/adicionar/usuario">Adicionar</Link></li>
                     </ul>
                 </li>
                 <li className="dropdown">   
@@ -167,7 +166,6 @@ function App() {
 
     {/* Usuario */}
     <Route path="/listar/usuario" element={<Autenticar><UsuarioListar /></Autenticar>} />
-    <Route path="/adicionar/usuario" element={<Autenticar><UsuarioAdicionar /></Autenticar>} />
     <Route path="/editar/usuario/:id" element={<Autenticar><UsuarioAlterar /></Autenticar>} />
 </Routes>
 
