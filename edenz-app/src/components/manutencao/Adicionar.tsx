@@ -15,8 +15,9 @@ interface Obra {
     id?: number;
     IdUsuario: number; 
     IdEngenheiro: number;  
-    IdStatus: number;  
-    Nome: string; 
+    IdStatus: number; 
+    idTrilho: Number,  
+    trilhoQtd: string; 
     Localização: string;  
     DataInicio: string;
     DataFim : string;
@@ -29,14 +30,13 @@ interface Obra {
 
 
 interface Manutencao {
-   id?: number;
+  id?: number;
   idObra: number;
   idMaterial: number;
-  materialQtd: string;
   idEquipamento: number;
+  nome: string;
+  materialQtd: string;
   equipamentoQtd: string;
-  idTrilho: number;
-  trilhoQtd: string;
   descricao: string;
   data: string;
 }
@@ -45,16 +45,15 @@ function ManutencaoAdicionar() {
   const [obras, setObras] = useState<Obra[]>([]);
   const [materias, setMateriais] = useState<Material[]>([]);
   const [equipamentos, setEquipamentos] = useState<Equipamento[]>([]);
+
   const [nome, setNome] = useState("");
   const [materialQtd, setMaterialQtd] = useState("");
   const [equipamentoQtd, setEquipamentoQtd] = useState("");
-  const [trilhoQtd, setTrilhoQtd] = useState("");
   const [descricao, setDescricao] = useState("");
   const [data, setData] = useState("");
   const [obraId, setObraId] = useState<number>(0);
   const [materialId, setMaterialId] = useState<number>(0);
   const [equipamentoId, setEquipamentoId] = useState<number>(0);
-  const [trilhoId, setTrilhoId] = useState<number>(0);
 
   useEffect(() => {
     axios
@@ -95,24 +94,34 @@ function ManutencaoAdicionar() {
     const manutencao: Manutencao = {
       idObra: Number(obraId),
       idMaterial: Number(materialId),
-      materialQtd, 
       idEquipamento: Number(equipamentoId), 
+      nome,
+      materialQtd, 
       equipamentoQtd, 
-      idTrilho: Number(equipamentoId),  
-      trilhoQtd, 
       descricao, 
       data,
     }
 
-    axios
-      .post('http://localhost:5178/api/manutencao', manutencao)
-      .then((resposta) => {
-        console.log('Manutenção cadastrada:', resposta.data);
-        alert('Manutenção cadastrada com sucesso!');
+    fetch('http://localhost:5178/api/manutencao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(manutencao),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erro ao cadastrar manutencao');
+        }
+        return response.json();
       })
-      .catch((erro) => {
-        console.error('Erro ao cadastrar manutenção:', erro);
-        alert('Erro ao cadastrar manutenção.');
+      .then((data) => {
+        console.log('manutencao cadastrado:', data);
+        alert('manutencao cadastrado com sucesso!');
+      })
+      .catch((error) => {
+        console.error('Erro ao cadastrar manutencao:', error);
+        alert('Erro ao cadastrar manutencao!');
       });
   }
 
@@ -122,52 +131,46 @@ function ManutencaoAdicionar() {
         <h2>Cadastro de Manutenção</h2>
       </div>
       <form onSubmit={enviarManutencao}>
-        {/* <div className="form-group">
-          <label htmlFor="idObra">ID da Obra</label>
-          <input type="number" id="idObra" value={manutencao.idObra} onChange={handleChange} required />
+         <div className="form-group">
+          <label htmlFor="idObra">Obra</label>
+          <input type="number" id="idObra" onChange={(e: any) => setObraId(e.target.value)} required />
         </div>
 
         <div className="form-group">
-          <label htmlFor="idMaterial">ID do Material</label>
-          <input type="number" id="idMaterial" value={manutencao.idMaterial} onChange={handleChange} required />
+          <label htmlFor="idMaterial">Material</label>
+          <input type="number" id="idMaterial" onChange={(e: any) => setMaterialId(e.target.value)} required />
         </div>
 
         <div className="form-group">
           <label htmlFor="materialQtd">Quantidade de Material</label>
-          <input type="text" id="materialQtd" value={manutencao.materialQtd} onChange={handleChange} required />
+          <input type="text" id="materialQtd" onChange={(e: any) => setMaterialQtd(e.target.value)} required />
         </div>
 
         <div className="form-group">
-          <label htmlFor="idEquipamento">ID do Equipamento</label>
-          <input type="number" id="idEquipamento" value={manutencao.idEquipamento} onChange={handleChange} required />
+          <label htmlFor="idEquipamento">Equipamento</label>
+          <input type="number" id="idEquipamento" onChange={(e: any) => setEquipamentoId(e.target.value)} required />
         </div>
 
         <div className="form-group">
           <label htmlFor="equipamentoQtd">Quantidade de Equipamento</label>
-          <input type="text" id="equipamentoQtd" value={manutencao.equipamentoQtd} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="idTrilho">ID do Trilho</label>
-          <input type="number" id="idTrilho" value={manutencao.idTrilho} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="trilhoQtd">Quantidade de Trilho</label>
-          <input type="text" id="trilhoQtd" value={manutencao.trilhoQtd} onChange={handleChange} required />
+          <input type="text" id="equipamentoQtd" onChange={(e: any) => setEquipamentoQtd(e.target.value)} required />
         </div>
 
         <div className="form-group">
           <label htmlFor="descricao">Descrição</label>
-          <textarea id="descricao" value={manutencao.descricao} onChange={handleChange} required />
+          <textarea id="descricao" onChange={(e: any) => setDescricao(e.target.value)} required />
+        </div>
+        <div className="form-group">
+          <label htmlFor="descricao">Nome</label>
+          <textarea id="descricao" onChange={(e: any) => setNome(e.target.value)} required />
         </div>
 
         <div className="form-group">
           <label htmlFor="data">Data</label>
-          <input type="text" id="data" placeholder="dd/mm/aaaa" value={manutencao.data} onChange={handleChange} required />
+          <input type="text" id="data" placeholder="dd/mm/aaaa" onChange={(e: any) => setData(e.target.value)} required />
         </div>
 
-        <button type="submit">Cadastrar</button> */}
+        <button type="submit">Cadastrar</button> 
       </form>
 
       <footer>
