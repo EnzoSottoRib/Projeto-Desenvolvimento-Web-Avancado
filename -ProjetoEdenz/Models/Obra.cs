@@ -38,13 +38,9 @@ namespace _ProjetoEdenz.Models
         public  string DataFim { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(20, ErrorMessage = "O custo previsto precisa ter no máximo 20 caracteres.")]
-        [MinLength(1, ErrorMessage = "O custo previsto precisa ter no mínimo 1 caracter.")]
         public  double CustoPrevisto { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(20, ErrorMessage = "O custo real precisa ter no máximo 20 caracteres.")]
-        [MinLength(1, ErrorMessage = "O custo real precisa ter no mínimo 1 caracter.")]
         public  double CustoReal { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]

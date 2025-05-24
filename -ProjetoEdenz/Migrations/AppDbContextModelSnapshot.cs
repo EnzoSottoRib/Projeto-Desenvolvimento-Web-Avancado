@@ -110,7 +110,7 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int?>("ObraId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrilhoId")
+                    b.Property<int>("TrilhoId")
                         .HasColumnType("int");
 
                     b.Property<string>("TrilhoQtd")
@@ -167,11 +167,9 @@ namespace _ProjetoEdenz.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<double>("CustoPrevisto")
-                        .HasMaxLength(20)
                         .HasColumnType("double");
 
                     b.Property<double>("CustoReal")
-                        .HasMaxLength(20)
                         .HasColumnType("double");
 
                     b.Property<string>("DataFim")
@@ -324,7 +322,9 @@ namespace _ProjetoEdenz.Migrations
 
                     b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
                         .WithMany()
-                        .HasForeignKey("TrilhoId");
+                        .HasForeignKey("TrilhoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Equipamento");
 

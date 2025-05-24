@@ -15,7 +15,7 @@ namespace _ProjetoEdenz.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Engenheiro",
+                name: "Engenheiros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,7 +24,7 @@ namespace _ProjetoEdenz.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cpf = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    dataNascimento = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
+                    DataNascimento = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RegistroCREA = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -33,12 +33,12 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Engenheiro", x => x.Id);
+                    table.PrimaryKey("PK_Engenheiros", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Equipamento",
+                name: "Equipamentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,22 +48,7 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Equipamento", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Material",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Material", x => x.Id);
+                    table.PrimaryKey("PK_Equipamentos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -83,7 +68,7 @@ namespace _ProjetoEdenz.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoManutencao",
+                name: "TiposManutencao",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -93,12 +78,12 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoManutencao", x => x.Id);
+                    table.PrimaryKey("PK_TiposManutencao", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Trilho",
+                name: "Trilhos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -108,12 +93,12 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trilho", x => x.Id);
+                    table.PrimaryKey("PK_Trilhos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Usuario",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -122,29 +107,29 @@ namespace _ProjetoEdenz.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Senha = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                    Senha = table.Column<string>(type: "varchar(70)", maxLength: 70, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cpf = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Obra",
+                name: "Obras",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IdUsuario = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: true),
                     IdEngenheiro = table.Column<int>(type: "int", nullable: false),
-                    EngenheiroId = table.Column<int>(type: "int", nullable: false),
+                    EngenheiroId = table.Column<int>(type: "int", nullable: true),
                     IdStatus = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
                     Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Localização = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -164,42 +149,38 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Obra", x => x.Id);
+                    table.PrimaryKey("PK_Obras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Obra_Engenheiro_EngenheiroId",
+                        name: "FK_Obras_Engenheiros_EngenheiroId",
                         column: x => x.EngenheiroId,
-                        principalTable: "Engenheiro",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Engenheiros",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Obra_Status_StatusId",
+                        name: "FK_Obras_Status_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Status",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Obra_Usuario_UsuarioId",
+                        name: "FK_Obras_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
-                        principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Manutencao",
+                name: "Manutencoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IdObra = table.Column<int>(type: "int", nullable: false),
-                    ObraId = table.Column<int>(type: "int", nullable: false),
+                    ObraId = table.Column<int>(type: "int", nullable: true),
                     IdMaterial = table.Column<int>(type: "int", nullable: false),
-                    MaterialId = table.Column<int>(type: "int", nullable: false),
                     MaterialQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdEquipamento = table.Column<int>(type: "int", nullable: false),
-                    EquipamentoId = table.Column<int>(type: "int", nullable: false),
+                    EquipamentoId = table.Column<int>(type: "int", nullable: true),
                     EquipamentoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdTrilho = table.Column<int>(type: "int", nullable: false),
@@ -213,67 +194,80 @@ namespace _ProjetoEdenz.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manutencao", x => x.Id);
+                    table.PrimaryKey("PK_Manutencoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Manutencao_Equipamento_EquipamentoId",
+                        name: "FK_Manutencoes_Equipamentos_EquipamentoId",
                         column: x => x.EquipamentoId,
-                        principalTable: "Equipamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Equipamentos",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Manutencao_Material_MaterialId",
-                        column: x => x.MaterialId,
-                        principalTable: "Material",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Manutencao_Obra_ObraId",
+                        name: "FK_Manutencoes_Obras_ObraId",
                         column: x => x.ObraId,
-                        principalTable: "Obra",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Obras",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Manutencao_Trilho_TrilhoId",
+                        name: "FK_Manutencoes_Trilhos_TrilhoId",
                         column: x => x.TrilhoId,
-                        principalTable: "Trilho",
+                        principalTable: "Trilhos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Materiais",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ManutencaoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Materiais", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Materiais_Manutencoes_ManutencaoId",
+                        column: x => x.ManutencaoId,
+                        principalTable: "Manutencoes",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
-                name: "IX_Manutencao_EquipamentoId",
-                table: "Manutencao",
+                name: "IX_Manutencoes_EquipamentoId",
+                table: "Manutencoes",
                 column: "EquipamentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manutencao_MaterialId",
-                table: "Manutencao",
-                column: "MaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Manutencao_ObraId",
-                table: "Manutencao",
+                name: "IX_Manutencoes_ObraId",
+                table: "Manutencoes",
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manutencao_TrilhoId",
-                table: "Manutencao",
+                name: "IX_Manutencoes_TrilhoId",
+                table: "Manutencoes",
                 column: "TrilhoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obra_EngenheiroId",
-                table: "Obra",
+                name: "IX_Materiais_ManutencaoId",
+                table: "Materiais",
+                column: "ManutencaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Obras_EngenheiroId",
+                table: "Obras",
                 column: "EngenheiroId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obra_StatusId",
-                table: "Obra",
+                name: "IX_Obras_StatusId",
+                table: "Obras",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obra_UsuarioId",
-                table: "Obra",
+                name: "IX_Obras_UsuarioId",
+                table: "Obras",
                 column: "UsuarioId");
         }
 
@@ -281,31 +275,31 @@ namespace _ProjetoEdenz.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Manutencao");
+                name: "Materiais");
 
             migrationBuilder.DropTable(
-                name: "TipoManutencao");
+                name: "TiposManutencao");
 
             migrationBuilder.DropTable(
-                name: "Equipamento");
+                name: "Manutencoes");
 
             migrationBuilder.DropTable(
-                name: "Material");
+                name: "Equipamentos");
 
             migrationBuilder.DropTable(
-                name: "Obra");
+                name: "Obras");
 
             migrationBuilder.DropTable(
-                name: "Trilho");
+                name: "Trilhos");
 
             migrationBuilder.DropTable(
-                name: "Engenheiro");
+                name: "Engenheiros");
 
             migrationBuilder.DropTable(
                 name: "Status");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Usuarios");
         }
     }
 }
