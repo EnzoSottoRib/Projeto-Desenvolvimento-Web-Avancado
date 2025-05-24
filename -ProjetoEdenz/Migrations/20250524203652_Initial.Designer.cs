@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _ProjetoEdenz.Data;
 
@@ -10,9 +11,11 @@ using _ProjetoEdenz.Data;
 namespace _ProjetoEdenz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524203652_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,13 +107,13 @@ namespace _ProjetoEdenz.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<int?>("ObraId")
                         .HasColumnType("int");
+
+                    b.Property<string>("TrilhoQtd")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("descricao")
                         .IsRequired()
@@ -212,13 +215,8 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrilhoId")
+                    b.Property<int>("TrilhoId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TrilhoQtd")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
 
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
@@ -349,7 +347,9 @@ namespace _ProjetoEdenz.Migrations
 
                     b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
                         .WithMany()
-                        .HasForeignKey("TrilhoId");
+                        .HasForeignKey("TrilhoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("_ProjetoEdenz.Models.Usuario", "Usuario")
                         .WithMany()

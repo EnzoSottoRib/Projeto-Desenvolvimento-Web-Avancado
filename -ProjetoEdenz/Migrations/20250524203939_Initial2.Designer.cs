@@ -11,8 +11,8 @@ using _ProjetoEdenz.Data;
 namespace _ProjetoEdenz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250524194937_Inicial")]
-    partial class Inicial
+    [Migration("20250524203939_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,9 +102,6 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int>("IdObra")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTrilho")
-                        .HasColumnType("int");
-
                     b.Property<string>("MaterialQtd")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -112,14 +109,6 @@ namespace _ProjetoEdenz.Migrations
 
                     b.Property<int?>("ObraId")
                         .HasColumnType("int");
-
-                    b.Property<int>("TrilhoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TrilhoQtd")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("descricao")
                         .IsRequired()
@@ -131,8 +120,6 @@ namespace _ProjetoEdenz.Migrations
                     b.HasIndex("EquipamentoId");
 
                     b.HasIndex("ObraId");
-
-                    b.HasIndex("TrilhoId");
 
                     b.ToTable("Manutencoes");
                 });
@@ -170,11 +157,9 @@ namespace _ProjetoEdenz.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<double>("CustoPrevisto")
-                        .HasMaxLength(20)
                         .HasColumnType("double");
 
                     b.Property<double>("CustoReal")
-                        .HasMaxLength(20)
                         .HasColumnType("double");
 
                     b.Property<string>("DataFim")
@@ -201,6 +186,9 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int>("IdStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdTrilho")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
@@ -222,6 +210,14 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TrilhoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TrilhoQtd")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
@@ -230,6 +226,8 @@ namespace _ProjetoEdenz.Migrations
                     b.HasIndex("EngenheiroId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("TrilhoId");
 
                     b.HasIndex("UsuarioId");
 
@@ -325,17 +323,9 @@ namespace _ProjetoEdenz.Migrations
                         .WithMany()
                         .HasForeignKey("ObraId");
 
-                    b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
-                        .WithMany()
-                        .HasForeignKey("TrilhoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Equipamento");
 
                     b.Navigation("Obra");
-
-                    b.Navigation("Trilho");
                 });
 
             modelBuilder.Entity("_ProjetoEdenz.Models.Material", b =>
@@ -355,6 +345,12 @@ namespace _ProjetoEdenz.Migrations
                         .WithMany()
                         .HasForeignKey("StatusId");
 
+                    b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
+                        .WithMany()
+                        .HasForeignKey("TrilhoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("_ProjetoEdenz.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId");
@@ -362,6 +358,8 @@ namespace _ProjetoEdenz.Migrations
                     b.Navigation("Engenheiro");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Trilho");
 
                     b.Navigation("Usuario");
                 });

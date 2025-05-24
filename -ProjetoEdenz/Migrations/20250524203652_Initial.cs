@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace _ProjetoEdenz.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -130,6 +130,8 @@ namespace _ProjetoEdenz.Migrations
                     EngenheiroId = table.Column<int>(type: "int", nullable: true),
                     IdStatus = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: true),
+                    IdTrilho = table.Column<int>(type: "int", nullable: false),
+                    TrilhoId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Localização = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -138,8 +140,8 @@ namespace _ProjetoEdenz.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DataFim = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CustoPrevisto = table.Column<double>(type: "double", maxLength: 20, nullable: false),
-                    CustoReal = table.Column<double>(type: "double", maxLength: 20, nullable: false),
+                    CustoPrevisto = table.Column<double>(type: "double", nullable: false),
+                    CustoReal = table.Column<double>(type: "double", nullable: false),
                     Complexidade = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ImpactoAmbiental = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
@@ -160,6 +162,12 @@ namespace _ProjetoEdenz.Migrations
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Obras_Trilhos_TrilhoId",
+                        column: x => x.TrilhoId,
+                        principalTable: "Trilhos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Obras_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -183,8 +191,6 @@ namespace _ProjetoEdenz.Migrations
                     EquipamentoId = table.Column<int>(type: "int", nullable: true),
                     EquipamentoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdTrilho = table.Column<int>(type: "int", nullable: false),
-                    TrilhoId = table.Column<int>(type: "int", nullable: false),
                     TrilhoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
@@ -205,12 +211,6 @@ namespace _ProjetoEdenz.Migrations
                         column: x => x.ObraId,
                         principalTable: "Obras",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Manutencoes_Trilhos_TrilhoId",
-                        column: x => x.TrilhoId,
-                        principalTable: "Trilhos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -246,11 +246,6 @@ namespace _ProjetoEdenz.Migrations
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manutencoes_TrilhoId",
-                table: "Manutencoes",
-                column: "TrilhoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Materiais_ManutencaoId",
                 table: "Materiais",
                 column: "ManutencaoId");
@@ -264,6 +259,11 @@ namespace _ProjetoEdenz.Migrations
                 name: "IX_Obras_StatusId",
                 table: "Obras",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Obras_TrilhoId",
+                table: "Obras",
+                column: "TrilhoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_UsuarioId",
@@ -290,13 +290,13 @@ namespace _ProjetoEdenz.Migrations
                 name: "Obras");
 
             migrationBuilder.DropTable(
-                name: "Trilhos");
-
-            migrationBuilder.DropTable(
                 name: "Engenheiros");
 
             migrationBuilder.DropTable(
                 name: "Status");
+
+            migrationBuilder.DropTable(
+                name: "Trilhos");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

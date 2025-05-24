@@ -16,7 +16,12 @@ namespace _ProjetoEdenz.Models
         [Required]
         public  int IdMaterial { get; set; }
         
-        public List<Material> Materiais { get; set; } = new();
+         [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(50, ErrorMessage = "O nome precisa ter no máximo 50 caracteres.")]
+        [MinLength(4, ErrorMessage = "O nome precisa ter no mínimo 4 caracteres.")]
+        public  string Nome { get; set; }
+
+        public List<Material>? Materiais { get; set; } = new();
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(15, ErrorMessage = "A quantidade precisa ter no máximo 15 caracteres.")]
@@ -32,15 +37,6 @@ namespace _ProjetoEdenz.Models
         [MinLength(1, ErrorMessage = "A quantidade precisa ter no mínimo 4 caracter.")]
         public string EquipamentoQtd { get; set; }
 
-        [Required]
-        public  int IdTrilho { get; set; }
-        [Required]
-        public Trilho? Trilho { get; set; }
-
-         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(15, ErrorMessage = "A quantidade precisa ter no máximo 15 caracteres.")]
-        [MinLength(1, ErrorMessage = "A quantidade precisa ter no mínimo 4 caracter.")]
-        public string TrilhoQtd { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(100, ErrorMessage = "A descrição precisa ter no máximo 100 caracteres.")]

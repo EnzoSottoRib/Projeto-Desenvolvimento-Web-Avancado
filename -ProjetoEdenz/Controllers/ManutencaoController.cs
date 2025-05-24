@@ -21,26 +21,26 @@ namespace _ProjetoEdenz.Controllers
         [HttpPost]
         public async Task<IActionResult> AddManutencao(Manutencao manutencao)
         {
-            var equipamentoExiste = await _appDbContext.Equipamentos
-                .AnyAsync(e => e.Id == manutencao.IdEquipamento);
+            var obraExistente = await _appDbContext.Obras.AnyAsync(u => u.Id == manutencao.IdObra);
+            var materialExistente = await _appDbContext.Materiais.AnyAsync(e => e.Id == manutencao.IdMaterial);
+            var equipamento = await _appDbContext.Status.AnyAsync(s => s.Id == manutencao.IdEquipamento);
 
-            if (!equipamentoExiste)
-                return BadRequest("Equipamento não encontrado!");
+            if (!obraExistente)
+                return BadRequest("Usuário não encontrado!");
+            if (!materialExistente)
+                return BadRequest("Engenheiro não encontrado!");
+            if (!equipamento)
+                return BadRequest("Status não encontrado!");
 
-            foreach (var material in manutencao.Materiais)
-            {
-                var materialExiste = await _appDbContext.Materiais
-                    .AnyAsync(m => m.Id == material.Id);
-
-                if (!materialExiste)
-                    return BadRequest($"Material ID {material.Id} não existe!");
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             _appDbContext.Manutencoes.Add(manutencao);
             await _appDbContext.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetManutencao), new { id = manutencao.Id }, manutencao);
         }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Manutencao>>> GetAllManutencoes()

@@ -14,9 +14,19 @@ namespace _ProjetoEdenz.Models
         public  int IdEngenheiro { get; set; }
       
         public Engenheiro? Engenheiro { get; set; }
-        public  int IdStatus { get; set; }
+        [Required]
+        public int IdStatus { get; set; }
       
         public Status? Status { get; set; }
+
+         [Required]
+        public  int IdTrilho { get; set; }
+        public Trilho? Trilho { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(15, ErrorMessage = "A quantidade precisa ter no máximo 15 caracteres.")]
+        [MinLength(1, ErrorMessage = "A quantidade precisa ter no mínimo 4 caracter.")]
+        public string TrilhoQtd { get; set; }
 
          [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(50, ErrorMessage = "O nome precisa ter no máximo 50 caracteres.")]
