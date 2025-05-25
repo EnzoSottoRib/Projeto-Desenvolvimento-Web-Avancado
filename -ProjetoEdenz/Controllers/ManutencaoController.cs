@@ -23,14 +23,14 @@ namespace _ProjetoEdenz.Controllers
         {
             var obraExistente = await _appDbContext.Obras.AnyAsync(u => u.Id == manutencao.IdObra);
             var materialExistente = await _appDbContext.Materiais.AnyAsync(e => e.Id == manutencao.IdMaterial);
-            var equipamento = await _appDbContext.Status.AnyAsync(s => s.Id == manutencao.IdEquipamento);
+            var equipamento = await _appDbContext.Equipamentos.AnyAsync(s => s.Id == manutencao.IdEquipamento);
 
             if (!obraExistente)
-                return BadRequest("Usuário não encontrado!");
+                return BadRequest("Obra não encontrado!");
             if (!materialExistente)
-                return BadRequest("Engenheiro não encontrado!");
+                return BadRequest("Material não encontrado!");
             if (!equipamento)
-                return BadRequest("Status não encontrado!");
+                return BadRequest("Equipamento não encontrado!");
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
