@@ -2,8 +2,39 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+interface Equipamento {
+    id?: number;
+    nome: string;
+}
+
+interface Material {
+    id?: number;
+    nome: string;
+}
+
+interface Obra {
+    id?: number;
+    IdUsuario: number; 
+    IdEngenheiro: number;  
+    IdStatus: number; 
+    idTrilho: Number,  
+    nome: string;
+    trilhoQtd: string; 
+    Localização: string;  
+    DataInicio: string;
+    DataFim : string;
+    CustoPrevisto: number; 
+    CustoReal : number; 
+    Complexidade: string;
+    ImpactoAmbiental : string;
+    Descricao : string;
+}
+
 interface Manutencao {
   id: number;
+  material?: Material;
+  obra?: Obra;
+  equipamento?: Equipamento;
   idObra: number;
   idMaterial: number;
   materialQtd: string;
@@ -67,7 +98,7 @@ function ManutencaoListar() {
           {manutencoes.map(manutencao => (
             <tr key={manutencao.id}>
               <td>{manutencao.id}</td>
-              <td>{manutencao.idObra}</td>
+              <td>{manutencao.obra?.nome}</td>
               <td>{manutencao.idMaterial}</td>
               <td>{manutencao.materialQtd}</td>
               <td>{manutencao.idEquipamento}</td>

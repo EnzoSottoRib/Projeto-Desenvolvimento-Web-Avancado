@@ -17,6 +17,7 @@ interface Obra {
     IdEngenheiro: number;  
     IdStatus: number; 
     idTrilho: Number,  
+    nome: string;
     trilhoQtd: string; 
     Localização: string;  
     DataInicio: string;
@@ -43,7 +44,7 @@ interface Manutencao {
 
 function ManutencaoAdicionar() {
   const [obras, setObras] = useState<Obra[]>([]);
-  const [materias, setMateriais] = useState<Material[]>([]);
+  const [materiais, setMateriais] = useState<Material[]>([]);
   const [equipamentos, setEquipamentos] = useState<Equipamento[]>([]);
 
   const [nome, setNome] = useState("");
@@ -57,7 +58,7 @@ function ManutencaoAdicionar() {
 
   useEffect(() => {
     axios
-      .get<Obra[]>("http://localhost:5020/api/obra/listar")
+      .get<Obra[]>("http://localhost:5178/api/obra")
       .then((resposta) => {
         setObras(resposta.data);
       })
@@ -68,7 +69,7 @@ function ManutencaoAdicionar() {
 
   useEffect(() => {
     axios
-      .get<Material[]>("http://localhost:5020/api/material/listar")
+      .get<Material[]>("http://localhost:5178/api/material")
       .then((resposta) => {
         setMateriais(resposta.data);
       })
@@ -79,7 +80,7 @@ function ManutencaoAdicionar() {
 
   useEffect(() => {
     axios
-      .get<Equipamento[]>("http://localhost:5020/api/equipamento/listar")
+      .get<Equipamento[]>("http://localhost:5178/api/equipamento")
       .then((resposta) => {
         setEquipamentos(resposta.data);
       })
@@ -132,13 +133,39 @@ function ManutencaoAdicionar() {
       </div>
       <form onSubmit={enviarManutencao}>
          <div className="form-group">
+          <label htmlFor="descricao">Nome</label>
+          <textarea id="descricao" onChange={(e: any) => setNome(e.target.value)} required />
+        </div>
+         <div className="form-group">
           <label htmlFor="idObra">Obra</label>
-          <input type="number" id="idObra" onChange={(e: any) => setObraId(e.target.value)} required />
+          <select
+                    value={obraId}
+                    onChange={(e) => setObraId(Number(e.target.value))}
+                    required
+                >
+                    <option value={0}>Selecione uma obra</option>
+                    {obras.map((obra) => (
+                    <option key={obra.id} value={obra.id}>
+                        {obra.nome}
+                    </option>
+                    ))}
+                </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="idMaterial">Material</label>
-          <input type="number" id="idMaterial" onChange={(e: any) => setMaterialId(e.target.value)} required />
+          <select
+                    value={materialId}
+                    onChange={(e) => setMaterialId(Number(e.target.value))}
+                    required
+                >
+                    <option value={0}>Selecione um material</option>
+                    {equipamentos.map((equipamento) => (
+                    <option key={equipamento.id} value={equipamento.id}>
+                        {equipamento.nome}
+                    </option>
+                    ))}
+                </select>
         </div>
 
         <div className="form-group">
@@ -148,7 +175,18 @@ function ManutencaoAdicionar() {
 
         <div className="form-group">
           <label htmlFor="idEquipamento">Equipamento</label>
-          <input type="number" id="idEquipamento" onChange={(e: any) => setEquipamentoId(e.target.value)} required />
+          <select
+                    value={equipamentoId}
+                    onChange={(e) => setEquipamentoId(Number(e.target.value))}
+                    required
+                >
+                    <option value={0}>Selecione um equipamento</option>
+                    {materiais.map((material) => (
+                    <option key={material.id} value={material.id}>
+                        {material.nome}
+                    </option>
+                    ))}
+                </select>
         </div>
 
         <div className="form-group">
@@ -160,10 +198,7 @@ function ManutencaoAdicionar() {
           <label htmlFor="descricao">Descrição</label>
           <textarea id="descricao" onChange={(e: any) => setDescricao(e.target.value)} required />
         </div>
-        <div className="form-group">
-          <label htmlFor="descricao">Nome</label>
-          <textarea id="descricao" onChange={(e: any) => setNome(e.target.value)} required />
-        </div>
+       
 
         <div className="form-group">
           <label htmlFor="data">Data</label>
