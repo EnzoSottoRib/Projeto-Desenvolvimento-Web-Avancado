@@ -15,6 +15,8 @@ namespace _ProjetoEdenz.Models
         
         [Required]
         public  int IdMaterial { get; set; }
+
+        public Material? Material { get; set; }
         
          [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(50, ErrorMessage = "O nome precisa ter no máximo 50 caracteres.")]

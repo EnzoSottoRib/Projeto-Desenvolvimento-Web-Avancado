@@ -21,19 +21,24 @@ namespace _ProjetoEdenz.Controllers
         [HttpPost]
         public async Task<IActionResult> AddManutencao(Manutencao manutencao)
         {
-            var obraExistente = await _appDbContext.Obras.AnyAsync(u => u.Id == manutencao.IdObra);
-            var materialExistente = await _appDbContext.Materiais.AnyAsync(e => e.Id == manutencao.IdMaterial);
-            var equipamento = await _appDbContext.Equipamentos.AnyAsync(s => s.Id == manutencao.IdEquipamento);
+            var obra = await _appDbContext.Obras.FirstOrDefaultAsync(u => u.Id == manutencao.IdObra);
+            var material = await _appDbContext.Materiais.FirstOrDefaultAsync(e => e.Id == manutencao.IdMaterial);
+            
+            var equipamento = await _appDbContext.Equipamentos.FirstOrDefaultAsync(s => s.Id == manutencao.IdEquipamento);
 
-            if (!obraExistente)
-                return BadRequest("Obra não encontrado!");
-            if (!materialExistente)
+           if (obra == null)
+                return BadRequest("Obra não encontrada!");
+            if (material == null)
                 return BadRequest("Material não encontrado!");
-            if (!equipamento)
+            if (equipamento == null)
                 return BadRequest("Equipamento não encontrado!");
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            // Atribui o objeto real de equipamento
+            manutencao.Equipamento = equipamento;
+            manutencao.Obra = obra;
+            manutencao.Material = material;
+
+           
 
             _appDbContext.Manutencoes.Add(manutencao);
             await _appDbContext.SaveChangesAsync();

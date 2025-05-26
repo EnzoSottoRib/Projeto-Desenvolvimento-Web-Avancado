@@ -99,6 +99,9 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<int>("IdObra")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MaterialQtd")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -120,6 +123,8 @@ namespace _ProjetoEdenz.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EquipamentoId");
+
+                    b.HasIndex("MaterialId");
 
                     b.HasIndex("ObraId");
 
@@ -321,11 +326,17 @@ namespace _ProjetoEdenz.Migrations
                         .WithMany()
                         .HasForeignKey("EquipamentoId");
 
+                    b.HasOne("_ProjetoEdenz.Models.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId");
+
                     b.HasOne("_ProjetoEdenz.Models.Obra", "Obra")
                         .WithMany()
                         .HasForeignKey("ObraId");
 
                     b.Navigation("Equipamento");
+
+                    b.Navigation("Material");
 
                     b.Navigation("Obra");
                 });

@@ -131,7 +131,9 @@ namespace _ProjetoEdenz.Migrations
                     IdStatus = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: true),
                     IdTrilho = table.Column<int>(type: "int", nullable: false),
-                    TrilhoId = table.Column<int>(type: "int", nullable: false),
+                    TrilhoId = table.Column<int>(type: "int", nullable: true),
+                    TrilhoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Localização = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -166,8 +168,7 @@ namespace _ProjetoEdenz.Migrations
                         name: "FK_Obras_Trilhos_TrilhoId",
                         column: x => x.TrilhoId,
                         principalTable: "Trilhos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Obras_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -185,13 +186,13 @@ namespace _ProjetoEdenz.Migrations
                     IdObra = table.Column<int>(type: "int", nullable: false),
                     ObraId = table.Column<int>(type: "int", nullable: true),
                     IdMaterial = table.Column<int>(type: "int", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     MaterialQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdEquipamento = table.Column<int>(type: "int", nullable: false),
                     EquipamentoId = table.Column<int>(type: "int", nullable: true),
                     EquipamentoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TrilhoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
