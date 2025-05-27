@@ -2,116 +2,213 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+interface Equipamento {
+    id?: number;
+    nome: string;
+}
+
+interface Material {
+    id?: number;
+    nome: string;
+}
+
+interface Obra {
+    id?: number;
+    IdUsuario: number; 
+    IdEngenheiro: number;  
+    IdStatus: number; 
+    idTrilho: Number,  
+    nome: string;
+    trilhoQtd: string; 
+    Localização: string;  
+    DataInicio: string;
+    DataFim : string;
+    CustoPrevisto: number; 
+    CustoReal : number; 
+    Complexidade: string;
+    ImpactoAmbiental : string;
+    Descricao : string;
+}
+
 interface Manutencao {
-  id: number;
+  id?: number;
   idObra: number;
   idMaterial: number;
-  materialQtd: string;
   idEquipamento: number;
+  nome: string;
+  materialQtd: string;
   equipamentoQtd: string;
-  idTrilho: number;
-  trilhoQtd: string;
   descricao: string;
   data: string;
 }
 
 function ManutencaoAlterar() {
   const { id } = useParams();
-  const [manutencao, setManutencao] = useState<Manutencao | null>(null);
+  const [materiais, setMateriais] = useState<Material[]>([]);
+  const [equipamentos, setEquipamentos] = useState<Equipamento[]>([]);
+  const [obras, setObras] = useState<Obra[]>([]);
+  const [nome, setNome] = useState("");
+  const [idObra, setIdObra] = useState(0);
+  const [materialId, setMaterialId] = useState(0);
+  const [equipamentoId, setEquipamentoId] = useState(0);
+  const [equipamentoQtd, setEquipamentoQtd] = useState("");
+  const [materialQtd, setMaterialQtd] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [data, setData] = useState("");
 
   useEffect(() => {
     if (id) {
       axios
-        .get<Manutencao>(`http://localhost:5178/api/manutencao/${id}`)
-        .then((res) => {
-          setManutencao(res.data);
-        })
-        .catch((err) => {
-          console.error('Erro ao buscar manutenção:', err);
-          alert('Erro ao buscar manutenção.');
+        .get<Manutencao>(
+          `http://localhost:5178/api/manutencao/${id}`
+        )
+        .then((resposta) => {
+          const manutencao = resposta.data;
+          setNome(manutencao.nome);
+          setEquipamentoQtd(manutencao.equipamentoQtd);
+          setMaterialQtd(manutencao.materialQtd);
+          setDescricao(manutencao.descricao);
+          setData(manutencao.data);
+          setIdObra(manutencao.idObra);
+          setMaterialId(manutencao.idMaterial);
+          setEquipamentoId(manutencao.idEquipamento);
+          buscarMateriais();
+          buscarEquipamentos();
+          buscarObras();
         });
     }
-  }, [id]);
+  }, []);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { id: fieldId, value } = e.target;
-    if (manutencao) {
-      setManutencao({ ...manutencao, [fieldId]: fieldId.includes('id') ? Number(value) : value });
-    }
+  function buscarMateriais() {
+    axios
+      .get<Material[]>("http://localhost:5178/api/material")
+      .then((resposta) => {
+        setMateriais(resposta.data);
+      });
+  }
+  function buscarEquipamentos() {
+    axios
+      .get<Equipamento[]>("http://localhost:5178/api/equipamento")
+      .then((resposta) => {
+        setEquipamentos(resposta.data);
+      });
+  }
+  function buscarObras() {
+    axios
+      .get<Obra[]>("http://localhost:5178/api/obra")
+      .then((resposta) => {
+        setObras(resposta.data);
+      });
   }
 
-  function enviarAtualizacao(e: React.FormEvent) {
+  function enviarManutencao(e: any) {
     e.preventDefault();
-    if (manutencao) {
-      axios
-        .put(`http://localhost:5178/api/manutencao/${id}`, manutencao)
-        .then((res) => {
-          console.log('Manutenção atualizada:', res.data);
-          alert('Manutenção atualizada com sucesso!');
-        })
-        .catch((err) => {
-          console.error('Erro ao atualizar manutenção:', err);
-          alert('Erro ao atualizar manutenção.');
-        });
-    }
-  }
 
-  if (!manutencao) return <div>Carregando...</div>;
+    const manutencao: Manutencao = {
+      id: Number(id),
+      nome: nome,
+      equipamentoQtd: equipamentoQtd,
+      materialQtd: materialQtd,
+      descricao: descricao,
+      data: data,
+      idObra: Number(idObra),
+      idMaterial: Number(materialId),
+      idEquipamento: Number(equipamentoId)
+    };
+
+    axios
+      .put(`http://localhost:5178/api/manutencao/${id}`, manutencao)
+      .then((resposta) => {
+        console.log(resposta.data);
+        alert("Manutenção atualizada com sucesso!");
+      });
+  }
 
   return (
+    
     <div className="form-container">
-      <div className="form-header">
-        <h2>Editar Manutenção</h2>
+    <div className="form-header">
+        <h2>Edição de Manutenção</h2>
       </div>
-      <form onSubmit={enviarAtualizacao}>
-        <div className="form-group">
-          <label htmlFor="idObra">ID da Obra</label>
-          <input type="number" id="idObra" value={manutencao.idObra} onChange={handleChange} required />
+      <form onSubmit={enviarManutencao}>
+         <div className="form-group">
+          <label htmlFor="nome">Nome</label>
+          <input id="nome" value={nome} onChange={(e: any) => setNome(e.target.value)} required />
+        </div>
+         <div className="form-group">
+          <label htmlFor="idObra">Obra</label>
+          <select
+          value={idObra} // Define o valor padrão
+          onChange={(e: any) => setIdObra(Number(e.target.value))}
+        >
+          <option value={0}>Selecione uma obra</option> {1}
+          {obras.map((obra) => (
+            <option
+              value={obra.id}
+              key={obra.id}
+            >
+              {obra.nome}
+            </option>
+          ))}
+        </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="idMaterial">ID do Material</label>
-          <input type="number" id="idMaterial" value={manutencao.idMaterial} onChange={handleChange} required />
+          <label htmlFor="idMaterial">Material</label>
+          <select
+                    value={materialId}
+                    onChange={(e) => setMaterialId(Number(e.target.value))}
+                    required
+                >
+                    <option value={0}>Selecione um material</option>
+                    {equipamentos.map((equipamento) => (
+                    <option key={equipamento.id} value={equipamento.id}>
+                        {equipamento.nome}
+                    </option>
+                    ))}
+                </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="materialQtd">Quantidade de Material</label>
-          <input type="text" id="materialQtd" value={manutencao.materialQtd} onChange={handleChange} required />
+          <input type="text" value={materialQtd} id="materialQtd" onChange={(e: any) => setMaterialQtd(e.target.value)} required />
         </div>
 
         <div className="form-group">
-          <label htmlFor="idEquipamento">ID do Equipamento</label>
-          <input type="number" id="idEquipamento" value={manutencao.idEquipamento} onChange={handleChange} required />
+          <label htmlFor="idEquipamento">Equipamento</label>
+          <select
+                    value={equipamentoId}
+                    onChange={(e) => setEquipamentoId(Number(e.target.value))}
+                    required
+                >
+                    <option value={0}>Selecione um equipamento</option>
+                    {materiais.map((material) => (
+                    <option key={material.id} value={material.id}>
+                        {material.nome}
+                    </option>
+                    ))}
+                </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="equipamentoQtd">Quantidade de Equipamento</label>
-          <input type="text" id="equipamentoQtd" value={manutencao.equipamentoQtd} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="idTrilho">ID do Trilho</label>
-          <input type="number" id="idTrilho" value={manutencao.idTrilho} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="trilhoQtd">Quantidade de Trilho</label>
-          <input type="text" id="trilhoQtd" value={manutencao.trilhoQtd} onChange={handleChange} required />
+          <input value={equipamentoQtd} type="text" id="equipamentoQtd" onChange={(e: any) => setEquipamentoQtd(e.target.value)} required />
         </div>
 
         <div className="form-group">
           <label htmlFor="descricao">Descrição</label>
-          <textarea id="descricao" value={manutencao.descricao} onChange={handleChange} required />
+          <textarea id="descricao" value={descricao} onChange={(e: any) => setDescricao(e.target.value)} required />
         </div>
+       
 
         <div className="form-group">
           <label htmlFor="data">Data</label>
-          <input type="text" id="data" placeholder="dd/mm/aaaa" value={manutencao.data} onChange={handleChange} required />
+          <input type="text" id="data" value={data} placeholder="dd/mm/aaaa" onChange={(e: any) => setData(e.target.value)} required />
         </div>
 
-        <button type="submit">Salvar Alterações</button>
+        <button type="submit">Cadastrar</button> 
       </form>
-    </div>
+  </div>
   );
 }
 

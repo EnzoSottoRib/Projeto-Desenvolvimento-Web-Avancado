@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import "../../css/ComponentsListar.css";
 
 interface Equipamento {
     id?: number;
@@ -32,16 +33,15 @@ interface Obra {
 
 interface Manutencao {
   id: number;
-  material?: Material;
-  obra?: Obra;
-  equipamento?: Equipamento;
+  Obra?: Obra;
+  Material?: Material;
+  Equipamento?: Equipamento;
   idObra: number;
   idMaterial: number;
-  materialQtd: string;
   idEquipamento: number;
+  nome: string;
+  materialQtd: string;
   equipamentoQtd: string;
-  idTrilho: number;
-  trilhoQtd: string;
   descricao: string;
   data: string;
 }
@@ -75,36 +75,28 @@ function ManutencaoListar() {
   }
 
   return (
-    <div className="form-container">
+    <div className="divMain">
       <h1>Listar Manutenções</h1>
-
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>ID Obra</th>
-            <th>ID Material</th>
+            <th>Nome</th>
             <th>Qtd Material</th>
-            <th>ID Equipamento</th>
             <th>Qtd Equipamento</th>
-            <th>ID Trilho</th>
-            <th>Qtd Trilho</th>
             <th>Descrição</th>
             <th>Data</th>
-            <th>Ações</th>
+            <th>Deletar</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
           {manutencoes.map(manutencao => (
             <tr key={manutencao.id}>
               <td>{manutencao.id}</td>
-              <td>{manutencao.obra?.nome}</td>
-              <td>{manutencao.idMaterial}</td>
+              <td>{manutencao.nome}</td>
               <td>{manutencao.materialQtd}</td>
-              <td>{manutencao.idEquipamento}</td>
               <td>{manutencao.equipamentoQtd}</td>
-              <td>{manutencao.idTrilho}</td>
-              <td>{manutencao.trilhoQtd}</td>
               <td>{manutencao.descricao}</td>
               <td>{manutencao.data}</td>
               <td>

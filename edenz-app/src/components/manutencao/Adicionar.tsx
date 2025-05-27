@@ -133,8 +133,8 @@ function ManutencaoAdicionar() {
       </div>
       <form onSubmit={enviarManutencao}>
          <div className="form-group">
-          <label htmlFor="descricao">Nome</label>
-          <textarea id="descricao" onChange={(e: any) => setNome(e.target.value)} required />
+          <label htmlFor="nome">Nome</label>
+          <input id="nome" onChange={(e: any) => setNome(e.target.value)} required />
         </div>
          <div className="form-group">
           <label htmlFor="idObra">Obra</label>
