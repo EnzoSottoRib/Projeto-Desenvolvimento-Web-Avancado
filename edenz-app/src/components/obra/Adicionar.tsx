@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Interfaces para os modelos de dados
 interface Obra {
-  id?: number; // O ID pode ser opcional no momento do cadastro
-  idUsuario: number; // Alterado para number, como na sua model C#
+  id?: number; 
+  idUsuario: number; 
   idEngenheiro: number;
   idStatus: number;
   idTrilho: number;
   trilhoQtd: string;
   nome: string;
   localizacao: string;
-  dataInicio: string; // Manter como string para o input type="date"
-  dataFim: string;     // Manter como string para o input type="date"
+  dataInicio: string; 
+  dataFim: string;    
   custoPrevisto: number;
   custoReal: number;
   complexidade: string;
@@ -20,12 +19,11 @@ interface Obra {
   descricao: string;
 }
 
-interface Usuario { // Adicionado interface para Usuario para pegar o ID do localStorage
+interface Usuario { 
   id: number;
   nome: string;
   email: string;
   cpf: string;
-  // Adicione outras propriedades se necessário
 }
 
 interface Engenheiro {
@@ -45,14 +43,14 @@ interface Trilho {
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>(''); // Para mensagens de erro ao usuário
+  const [errorMessage, setErrorMessage] = useState<string>(''); 
 
   const [engenheiros, setEngenheiros] = useState<Engenheiro[]>([]);
   const [statusOptions, setStatusOptions] = useState<Status[]>([]);
   const [trilhos, setTrilhos] = useState<Trilho[]>([]);
 
   const [obra, setObra] = useState<Obra>({
-    idUsuario: 0, // Inicializa com 0 ou valor padrão
+    idUsuario: 0, 
     idEngenheiro: 0,
     idStatus: 0,
     idTrilho: 0,
@@ -68,7 +66,6 @@ export default function App() {
     descricao: '',
   });
 
-  // Efeito para carregar o ID do usuário do localStorage e dados dos dropdowns
   useEffect(() => {
     const fetchInitialData = async () => {
       let userId = 0;
@@ -76,15 +73,12 @@ export default function App() {
       if (usuarioLogadoString) {
         try {
           const usuarioObj: Usuario = JSON.parse(usuarioLogadoString);
-          userId = usuarioObj.id; // Assume que o ID é um número
+          userId = usuarioObj.id; 
         } catch (e) {
           console.error("Erro ao parsear usuário do localStorage:", e);
-          // Se houver erro, talvez você queira lidar com um ID de usuário padrão ou erro
           setErrorMessage("Erro ao carregar dados do usuário logado.");
         }
       } else {
-        // Se não houver usuário logado, você pode redirecionar para login
-        // Ou definir um ID padrão/temporário para testes (não recomendado em produção)
         console.warn("Nenhum usuário encontrado no localStorage. Definindo ID de usuário como 0.");
         setErrorMessage("Nenhum usuário logado encontrado. Por favor, faça login.");
       }
@@ -102,7 +96,6 @@ export default function App() {
         setStatusOptions(statusRes.data);
         setTrilhos(trilhosRes.data);
 
-        // Preencher os dropdowns com a primeira opção ou 0 se não houver dados
         setObra(prev => ({
           ...prev,
           idEngenheiro: engenheirosRes.data.length > 0 ? engenheirosRes.data[0].id : 0,
@@ -121,12 +114,10 @@ export default function App() {
     };
 
     fetchInitialData();
-  }, []); // Array de dependências vazio para rodar apenas uma vez na montagem
+  }, []); 
 
-  // Lidar com mudanças nos inputs de texto, textarea e select
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
-    // Converte para número apenas para os IDs de FK
     if (['idEngenheiro', 'idStatus', 'idTrilho'].includes(id)) {
       setObra({ ...obra, [id]: Number(value) });
     } else {
@@ -134,24 +125,19 @@ export default function App() {
     }
   };
 
-  // Lidar com mudanças nos inputs de número
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setObra({ ...obra, [id]: parseFloat(value) || 0 });
   };
 
-  // Lidar com mudanças nos inputs de data (já são strings no formato "YYYY-MM-DD")
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setObra({ ...obra, [id]: value });
   };
 
-  // Função de validação do formulário
   const validateForm = (): boolean => {
-    // Limpa mensagens de erro anteriores
     setErrorMessage('');
 
-    // Validação de campos obrigatórios e comprimento mínimo/máximo
     if (!obra.nome || obra.nome.length < 4 || obra.nome.length > 50) {
       setErrorMessage("O nome da obra deve ter entre 4 e 50 caracteres.");
       return false;
@@ -160,25 +146,24 @@ export default function App() {
       setErrorMessage("A localização deve ter entre 2 e 50 caracteres.");
       return false;
     }
-    if (!obra.dataInicio) { // Input type="date" já lida com o formato
+    if (!obra.dataInicio) { 
       setErrorMessage("A data de início é obrigatória.");
       return false;
     }
-    if (!obra.dataFim) { // Input type="date" já lida com o formato
+    if (!obra.dataFim) {
       setErrorMessage("A data de fim é obrigatória.");
       return false;
     }
-    // Adicione uma validação para garantir que DataFim é posterior a DataInicio
     if (obra.dataInicio && obra.dataFim && new Date(obra.dataFim) < new Date(obra.dataInicio)) {
       setErrorMessage("A data de fim não pode ser anterior à data de início.");
       return false;
     }
 
-    if (obra.custoPrevisto === 0) { // Pode ser 0, mas geralmente não é um bom padrão
+    if (obra.custoPrevisto === 0) { 
         setErrorMessage("O custo previsto é obrigatório e deve ser um valor válido.");
         return false;
     }
-    if (obra.custoReal < 0) { // Custo real pode ser 0, mas não negativo
+    if (obra.custoReal < 0) { 
       setErrorMessage("O custo real não pode ser negativo.");
       return false;
     }
@@ -199,7 +184,6 @@ export default function App() {
       return false;
     }
 
-    // Validação para dropdowns: verifica se uma opção válida foi selecionada
     if (obra.idEngenheiro === 0) {
       setErrorMessage("Selecione um engenheiro.");
       return false;
@@ -216,7 +200,6 @@ export default function App() {
     return true;
   };
 
-  // Lidar com o envio do formulário
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -226,20 +209,18 @@ export default function App() {
 
     setLoading(true);
     try {
-      // Formata as datas para o padrão ISO 8601 que sua API .NET Core espera
       const formattedObra = {
         ...obra,
-        dataInicio: new Date(obra.dataInicio).toISOString(),
-        dataFim: new Date(obra.dataFim).toISOString(),
-        idUsuario: obra.idUsuario, // Garante que o ID do usuário seja incluído
+        dataInicio: obra.dataInicio,
+        dataFim: obra.dataFim,
+        idUsuario: obra.idUsuario, 
       };
 
       const response = await axios.post('http://localhost:5178/api/obra', formattedObra);
       alert("Obra cadastrada com sucesso! ID: " + response.data.id);
       
-      // Limpa o formulário e redefine os valores dos dropdowns para o primeiro item ou 0
       setObra({
-        idUsuario: obra.idUsuario, // Mantém o ID do usuário logado
+        idUsuario: obra.idUsuario, 
         idEngenheiro: engenheiros.length > 0 ? engenheiros[0].id : 0,
         idStatus: statusOptions.length > 0 ? statusOptions[0].id : 0,
         idTrilho: trilhos.length > 0 ? trilhos[0].id : 0,
@@ -254,7 +235,7 @@ export default function App() {
         impactoAmbiental: '',
         descricao: '',
       });
-      setErrorMessage(''); // Limpa qualquer mensagem de erro anterior
+      setErrorMessage('');
 
     } catch (error) {
       console.error("Erro ao processar obra:", error);
@@ -262,12 +243,12 @@ export default function App() {
         const errorData = error.response.data;
         let msg = '';
         if (typeof errorData === 'string') {
-          msg = errorData; // Mensagem simples de Bad Request
-        } else if (errorData.errors) { // Erros de validação do ModelState
+          msg = errorData; 
+        } else if (errorData.errors) {
           for (const key in errorData.errors) {
             msg += `${key}: ${errorData.errors[key].join(', ')}\n`;
           }
-        } else if (errorData.title) { // Outros erros com título
+        } else if (errorData.title) { 
             msg = errorData.title;
         } else {
             msg = "Detalhes do erro não disponíveis.";
@@ -281,7 +262,6 @@ export default function App() {
     }
   };
 
-  // Renderização condicional enquanto os dados estão sendo carregados
   if (loading && engenheiros.length === 0 && statusOptions.length === 0 && trilhos.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -290,7 +270,6 @@ export default function App() {
     );
   }
 
-  // Renderização do formulário
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="form-container bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
@@ -307,7 +286,6 @@ export default function App() {
         )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Campo de ID do Usuário (somente leitura) */}
           <div className="form-group col-span-full">
             <label htmlFor="idUsuario" className="block text-sm font-medium text-gray-700">ID do Usuário</label>
             <input
@@ -319,7 +297,6 @@ export default function App() {
             />
           </div>
 
-          {/* Campos de texto e números */}
           <div className="form-group">
             <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome da Obra</label>
             <input
@@ -428,7 +405,6 @@ export default function App() {
             />
           </div>
 
-          {/* Dropdowns para FKs */}
           <div className="form-group">
             <label htmlFor="idEngenheiro" className="block text-sm font-medium text-gray-700">Engenheiro Responsável</label>
             <select
@@ -492,7 +468,7 @@ export default function App() {
           <div className="form-group">
             <label htmlFor="trilhoQtd" className="block text-sm font-medium text-gray-700">Quantidade de Trilho</label>
             <input
-              type="text" // Mantido como texto pela sua model, mas pode ser number se for sempre um número
+              type="text" 
               id="trilhoQtd"
               value={obra.trilhoQtd}
               onChange={handleChange}
@@ -503,7 +479,6 @@ export default function App() {
             />
           </div>
 
-          {/* Textarea para descrição */}
           <div className="form-group col-span-full">
             <label htmlFor="descricao" className="block text-sm font-medium text-gray-700">Descrição</label>
             <textarea
@@ -518,7 +493,6 @@ export default function App() {
             ></textarea>
           </div>
 
-          {/* Botão de envio */}
           <div className="col-span-full flex justify-center mt-6">
             <button
               type="submit"

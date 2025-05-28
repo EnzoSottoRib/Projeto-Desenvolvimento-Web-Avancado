@@ -11,8 +11,8 @@ using _ProjetoEdenz.Data;
 namespace _ProjetoEdenz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528035010_atualizando")]
-    partial class atualizando
+    [Migration("20250528131150_alterandoNomeLocal")]
+    partial class alterandoNomeLocal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

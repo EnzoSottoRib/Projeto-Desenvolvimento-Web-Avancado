@@ -36,16 +36,11 @@ namespace _ProjetoEdenz.Models
          [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(50, ErrorMessage = "A localização precisa ter no máximo 50 caracteres.")]
         [MinLength(2, ErrorMessage = "A localização precisa ter no mínimo 2 caracteres.")]
-        public  string Localização { get; set; }
+        public  string Localizacao { get; set; }
          [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(30, ErrorMessage = "A data precisa ter no máximo 13 caracteres.")]
-        [MinLength(3, ErrorMessage = "A data precisa ter no mínimo 7 caracteres.")]
-
-        public  string DataInicio { get; set; }
+        public DateTime DataInicio { get; set; }
          [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(13, ErrorMessage = "A data precisa ter no máximo 13 caracteres.")]
-        [MinLength(7, ErrorMessage = "A data precisa ter no mínimo 7 caracteres.")]
-        public  string DataFim { get; set; }
+        public DateTime DataFim { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         public  double CustoPrevisto { get; set; }

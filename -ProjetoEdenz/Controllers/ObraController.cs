@@ -48,6 +48,7 @@ namespace _ProjetoEdenz.Controllers
                 .Include(o => o.Usuario)
                 .Include(o => o.Engenheiro)
                 .Include(o => o.Status)
+                .Include(o => o.Trilho)
                 .ToListAsync();
 
             return Ok(obras);
@@ -60,6 +61,7 @@ namespace _ProjetoEdenz.Controllers
                 .Include(o => o.Usuario)
                 .Include(o => o.Engenheiro)
                 .Include(o => o.Status)
+                .Include(o => o.Trilho)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (obra == null)

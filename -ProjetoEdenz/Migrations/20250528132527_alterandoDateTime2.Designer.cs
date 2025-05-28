@@ -11,8 +11,8 @@ using _ProjetoEdenz.Data;
 namespace _ProjetoEdenz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528035010_atualizando")]
-    partial class atualizando
+    [Migration("20250528132527_alterandoDateTime2")]
+    partial class alterandoDateTime2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,15 +170,11 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<double>("CustoReal")
                         .HasColumnType("double");
 
-                    b.Property<string>("DataFim")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("varchar(13)");
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DataInicio")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Descricao")
                         .IsRequired()

@@ -138,7 +138,7 @@ function ManutencaoAlterar() {
          <div className="form-group">
           <label htmlFor="idObra">Obra</label>
           <select
-          value={idObra} // Define o valor padrão
+          value={idObra} 
           onChange={(e: any) => setIdObra(Number(e.target.value))}
         >
           <option value={0}>Selecione uma obra</option> {1}
@@ -161,9 +161,9 @@ function ManutencaoAlterar() {
                     required
                 >
                     <option value={0}>Selecione um material</option>
-                    {equipamentos.map((equipamento) => (
-                    <option key={equipamento.id} value={equipamento.id}>
-                        {equipamento.nome}
+                    {materiais.map((material) => (
+                    <option key={material.id} value={material.id}>
+                        {material.nome}
                     </option>
                     ))}
                 </select>
@@ -182,9 +182,9 @@ function ManutencaoAlterar() {
                     required
                 >
                     <option value={0}>Selecione um equipamento</option>
-                    {materiais.map((material) => (
-                    <option key={material.id} value={material.id}>
-                        {material.nome}
+                    {equipamentos.map((equipamento) => (
+                    <option key={equipamento.id} value={equipamento.id}>
+                        {equipamento.nome}
                     </option>
                     ))}
                 </select>

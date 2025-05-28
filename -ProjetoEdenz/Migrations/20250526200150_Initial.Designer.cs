@@ -202,7 +202,7 @@ namespace _ProjetoEdenz.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
-                    b.Property<string>("Localização")
+                    b.Property<string>("Localizacao")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");

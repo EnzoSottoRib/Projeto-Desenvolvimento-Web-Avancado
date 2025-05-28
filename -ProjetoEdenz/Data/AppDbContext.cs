@@ -28,6 +28,22 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Seed();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+        modelBuilder.Entity<Obra>()
+            .HasOne(o => o.Engenheiro)
+            .WithMany()
+            .HasForeignKey(o => o.IdEngenheiro);
+
+        modelBuilder.Entity<Obra>()
+            .HasOne(o => o.Status)
+            .WithMany()
+            .HasForeignKey(o => o.IdStatus);
+
+        modelBuilder.Entity<Obra>()
+            .HasOne(o => o.Trilho)
+            .WithMany()
+            .HasForeignKey(o => o.IdTrilho);
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

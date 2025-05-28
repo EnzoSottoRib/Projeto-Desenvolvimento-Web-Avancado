@@ -1,12 +1,11 @@
 {
   "Version": 1,
-  "Hash": "lmGz/FYCLg45JZCkwp9nRm9R9UqgiM95RAggnbQaXmg=",
+  "Hash": "hcxuYrTrIPGAii9oLeqfkmeLqQwLNa84kjOhhEn4/QQ=",
   "Source": "-ProjetoEdenz",
   "BasePath": "_content/-ProjetoEdenz",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": []
 }

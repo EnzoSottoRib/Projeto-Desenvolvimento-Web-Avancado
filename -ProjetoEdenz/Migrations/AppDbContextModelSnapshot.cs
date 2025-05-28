@@ -167,15 +167,11 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<double>("CustoReal")
                         .HasColumnType("double");
 
-                    b.Property<string>("DataFim")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("varchar(13)");
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DataInicio")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -202,7 +198,7 @@ namespace _ProjetoEdenz.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
-                    b.Property<string>("Localização")
+                    b.Property<string>("Localizacao")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
