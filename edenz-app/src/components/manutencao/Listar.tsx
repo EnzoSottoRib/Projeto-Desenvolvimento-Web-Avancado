@@ -75,7 +75,7 @@ function ManutencaoListar() {
   }
 
   return (
-    <div className="divMain">
+    <div className="divMain" style={{fontSize: "0.9rem"}}>
       <h1>Listar Manutenções</h1>
       <table>
         <thead>

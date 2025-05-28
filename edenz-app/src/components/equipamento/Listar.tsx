@@ -46,6 +46,8 @@ function EquipamentoListar() {
         <thead>
           <tr>
             <th>Nome</th>
+            <th>Deletar</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>

@@ -202,7 +202,7 @@ function ManutencaoAdicionar() {
 
         <div className="form-group">
           <label htmlFor="data">Data</label>
-          <input type="text" id="data" placeholder="dd/mm/aaaa" onChange={(e: any) => setData(e.target.value)} required />
+          <input type="date" id="data" placeholder="dd/mm/aaaa" onChange={(e: any) => setData(e.target.value)} required />
         </div>
 
         <button type="submit">Cadastrar</button> 

@@ -62,6 +62,7 @@ function Login(){
     <div className="input-container">
           <label>Email</label>
           <input
+          autoComplete="off"
             placeholder="Digite seu Email"
             type="text"
             id="email"
@@ -73,6 +74,7 @@ function Login(){
         <div className="input-container">
           <label>Senha</label>
           <input
+          autoComplete="off"
             placeholder="Digite sua Senha"
             type="password"
             id="senha"
@@ -88,7 +90,7 @@ function Login(){
     <button className="btn register"><Link to ="/usuario/cadastrar" style={{ textDecoration: "none", color: 'black'}}>Cadastrar</Link></button>
 
     
-    <button style={{ backgroundColor: "black"}}>Esqueceu sua senha?</button>
+ 
     </form>
   </div>
 }

@@ -88,7 +88,7 @@ function ObraListar() {
   };
 
   return (
-    <div className="divMain">
+    <div className="divMain" style={{fontSize: "0.9rem"}}>
       <h1>Listar Obras</h1>
       <table>
         <thead>
