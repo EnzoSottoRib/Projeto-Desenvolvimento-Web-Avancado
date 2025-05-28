@@ -38,8 +38,8 @@ namespace _ProjetoEdenz.Models
         [MinLength(2, ErrorMessage = "A localização precisa ter no mínimo 2 caracteres.")]
         public  string Localização { get; set; }
          [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(13, ErrorMessage = "A data precisa ter no máximo 13 caracteres.")]
-        [MinLength(7, ErrorMessage = "A data precisa ter no mínimo 7 caracteres.")]
+        [MaxLength(30, ErrorMessage = "A data precisa ter no máximo 13 caracteres.")]
+        [MinLength(3, ErrorMessage = "A data precisa ter no mínimo 7 caracteres.")]
 
         public  string DataInicio { get; set; }
          [Required(ErrorMessage = "Este campo é obrigatório.")]

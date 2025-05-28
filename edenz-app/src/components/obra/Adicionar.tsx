@@ -4,9 +4,9 @@ import axios from 'axios';
 interface Obra {
   id?: string;
   idUsuario: string;
-  idEngenheiro: string;
-  idStatus: string;
-  idTrilho: string;
+  idEngenheiro: number;
+  idStatus: number;
+  idTrilho: number;
   trilhoQtd: string;
   nome: string;
   localizacao: string;
@@ -20,49 +20,32 @@ interface Obra {
 }
 
 interface Engenheiro {
-  id: string;
+  id: number;
   nome: string;
 }
 
 interface Status {
-  id: string;
+  id: number;
   nome: string;
 }
 
 interface Trilho {
-  id: string;
+  id: number;
   nome: string;
 }
 
-const CustomMessage = ({ message, type, onClose }: { message: string, type: 'success' | 'error', onClose: () => void }) => {
-  if (!message) return null;
-
-  const bgColor = type === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700';
-  const textColor = type === 'success' ? 'text-green-700' : 'text-red-700';
-
-  return (
-    <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 p-4 rounded-md shadow-lg border ${bgColor} flex items-center justify-between animate-fade-in-down`}>
-      <p className={`font-semibold ${textColor}`}>{message}</p>
-      <button onClick={onClose} className="ml-4 text-lg font-bold text-gray-600 hover:text-gray-800">
-        &times;
-      </button>
-    </div>
-  );
-};
-
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
   const [engenheiros, setEngenheiros] = useState<Engenheiro[]>([]);
   const [statusOptions, setStatusOptions] = useState<Status[]>([]);
   const [trilhos, setTrilhos] = useState<Trilho[]>([]);
 
   const [obra, setObra] = useState<Obra>({
-    idUsuario: 'user-mock-id',
-    idEngenheiro: '',
-    idStatus: '',
-    idTrilho: '',
+    idUsuario: '',
+    idEngenheiro: 0,
+    idStatus: 0,
+    idTrilho: 0,
     trilhoQtd: '',
     nome: '',
     localizacao: '',
@@ -76,6 +59,21 @@ export default function App() {
   });
 
   useEffect(() => {
+    const usuarioLogadoString = localStorage.getItem("usuario");
+    let userId = '';
+    if (usuarioLogadoString) {
+      try {
+        const usuarioObj = JSON.parse(usuarioLogadoString);
+        userId = usuarioObj.id ? String(usuarioObj.id) : crypto.randomUUID();
+      } catch (e) {
+        console.error("Erro ao parsear usuário do localStorage:", e);
+        userId = crypto.randomUUID();
+      }
+    } else {
+      userId = crypto.randomUUID();
+    }
+    setObra(prev => ({ ...prev, idUsuario: userId }));
+
     const fetchDropdownData = async () => {
       try {
         const [engenheirosRes, statusRes, trilhosRes] = await Promise.all([
@@ -88,16 +86,18 @@ export default function App() {
         setStatusOptions(statusRes.data);
         setTrilhos(trilhosRes.data);
 
-        // Define os valores iniciais para os dropdowns se houver dados
         setObra(prev => ({
           ...prev,
-          idEngenheiro: engenheirosRes.data.length > 0 ? engenheirosRes.data[0].id : '',
-          idStatus: statusRes.data.length > 0 ? statusRes.data[0].id : '',
-          idTrilho: trilhosRes.data.length > 0 ? trilhosRes.data[0].id : '',
+          idEngenheiro: engenheirosRes.data.length > 0 ? engenheirosRes.data[0].id : 0,
+          idStatus: statusRes.data.length > 0 ? statusRes.data[0].id : 0,
+          idTrilho: trilhosRes.data.length > 0 ? trilhosRes.data[0].id : 0,
         }));
       } catch (error) {
         console.error("Erro ao carregar dados dos dropdowns:", error);
-        showMessage("Erro ao carregar opções para engenheiros, status ou trilhos.", "error");
+        alert("Erro ao carregar opções para engenheiros, status ou trilhos. Verifique se o servidor está rodando.");
+        setEngenheiros([]); // Limpa as opções para indicar que não foram carregadas
+        setStatusOptions([]);
+        setTrilhos([]);
       } finally {
         setLoading(false);
       }
@@ -108,7 +108,11 @@ export default function App() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
-    setObra({ ...obra, [id]: value });
+    if (id === 'idEngenheiro' || id === 'idStatus' || id === 'idTrilho') {
+      setObra({ ...obra, [id]: Number(value) });
+    } else {
+      setObra({ ...obra, [id]: value });
+    }
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,64 +125,73 @@ export default function App() {
     setObra({ ...obra, [id]: value });
   };
 
-  const showMessage = (text: string, type: 'success' | 'error') => {
-    setMessage({ text, type });
-    setTimeout(() => setMessage(null), 5000);
-  };
-
   const validateForm = (): boolean => {
     if (!obra.nome || obra.nome.length < 4 || obra.nome.length > 50) {
-      showMessage("O nome da obra deve ter entre 4 e 50 caracteres.", "error");
+      alert("O nome da obra deve ter entre 4 e 50 caracteres.");
       return false;
     }
     if (!obra.localizacao || obra.localizacao.length < 2 || obra.localizacao.length > 50) {
-      showMessage("A localização deve ter entre 2 e 50 caracteres.", "error");
+      alert("A localização deve ter entre 2 e 50 caracteres.");
       return false;
     }
     if (!obra.dataInicio || obra.dataInicio.length < 7 || obra.dataInicio.length > 13) {
-      showMessage("A data de início deve ter entre 7 e 13 caracteres.", "error");
+      alert("A data de início deve ter entre 7 e 13 caracteres.");
       return false;
     }
     if (!obra.dataFim || obra.dataFim.length < 7 || obra.dataFim.length > 13) {
-      showMessage("A data de fim deve ter entre 7 e 13 caracteres.", "error");
+      alert("A data de fim deve ter entre 7 e 13 caracteres.");
       return false;
     }
     if (obra.custoPrevisto <= 0) {
-      showMessage("O custo previsto deve ser um valor positivo.", "error");
+      alert("O custo previsto deve ser um valor positivo.");
       return false;
     }
     if (obra.custoReal < 0) {
-      showMessage("O custo real não pode ser negativo.", "error");
+      alert("O custo real não pode ser negativo.");
       return false;
     }
     if (!obra.complexidade || obra.complexidade.length < 1 || obra.complexidade.length > 20) {
-      showMessage("A complexidade deve ter entre 1 e 20 caracteres.", "error");
+      alert("A complexidade deve ter entre 1 e 20 caracteres.");
       return false;
     }
     if (!obra.impactoAmbiental || obra.impactoAmbiental.length < 1 || obra.impactoAmbiental.length > 30) {
-      showMessage("O impacto ambiental deve ter entre 1 e 30 caracteres.", "error");
+      alert("O impacto ambiental deve ter entre 1 e 30 caracteres.");
       return false;
     }
     if (!obra.descricao || obra.descricao.length < 1 || obra.descricao.length > 100) {
-      showMessage("A descrição deve ter entre 1 e 100 caracteres.", "error");
+      alert("A descrição deve ter entre 1 e 100 caracteres.");
       return false;
     }
     if (!obra.trilhoQtd || obra.trilhoQtd.length < 1 || obra.trilhoQtd.length > 15) {
-      showMessage("A quantidade de trilho deve ter entre 1 e 15 caracteres.", "error");
+      alert("A quantidade de trilho deve ter entre 1 e 15 caracteres.");
       return false;
     }
-    if (!obra.idEngenheiro) {
-      showMessage("Selecione um engenheiro.", "error");
+    
+    // Validação para dropdowns: verifica se há opções e se uma opção válida foi selecionada
+    if (engenheiros.length > 0 && (obra.idEngenheiro === 0 || !obra.idEngenheiro)) {
+      alert("Selecione um engenheiro.");
+      return false;
+    } else if (engenheiros.length === 0) {
+      alert("Não há engenheiros disponíveis para seleção. Por favor, cadastre um engenheiro primeiro.");
       return false;
     }
-    if (!obra.idStatus) {
-      showMessage("Selecione um status.", "error");
+
+    if (statusOptions.length > 0 && (obra.idStatus === 0 || !obra.idStatus)) {
+      alert("Selecione um status.");
+      return false;
+    } else if (statusOptions.length === 0) {
+      alert("Não há status disponíveis para seleção. Por favor, cadastre um status primeiro.");
       return false;
     }
-    if (!obra.idTrilho) {
-      showMessage("Selecione um tipo de trilho.", "error");
+
+    if (trilhos.length > 0 && (obra.idTrilho === 0 || !obra.idTrilho)) {
+      alert("Selecione um tipo de trilho.");
+      return false;
+    } else if (trilhos.length === 0) {
+      alert("Não há trilhos disponíveis para seleção. Por favor, cadastre um trilho primeiro.");
       return false;
     }
+
     return true;
   };
 
@@ -191,16 +204,13 @@ export default function App() {
 
     setLoading(true);
     try {
-      // Simula o envio para uma API (substitua por sua chamada fetch/axios real)
-      console.log("Dados da Obra a serem enviados:", obra);
-      // Exemplo de como você faria uma requisição POST com axios:
-      // await axios.post('http://localhost:5178/api/obra', obra);
-      showMessage("Obra validada e dados logados no console!", "success");
+      await axios.post('http://localhost:5178/api/obra', obra);
+      alert("Obra cadastrada com sucesso!");
       setObra({
-        idUsuario: 'user-mock-id',
-        idEngenheiro: engenheiros.length > 0 ? engenheiros[0].id : '',
-        idStatus: statusOptions.length > 0 ? statusOptions[0].id : '',
-        idTrilho: trilhos.length > 0 ? trilhos[0].id : '',
+        idUsuario: obra.idUsuario,
+        idEngenheiro: engenheiros.length > 0 ? engenheiros[0].id : 0,
+        idStatus: statusOptions.length > 0 ? statusOptions[0].id : 0,
+        idTrilho: trilhos.length > 0 ? trilhos[0].id : 0,
         trilhoQtd: '',
         nome: '',
         localizacao: '',
@@ -214,7 +224,30 @@ export default function App() {
       });
     } catch (error) {
       console.error("Erro ao processar obra:", error);
-      showMessage("Erro ao processar obra. Verifique o console para mais detalhes.", "error");
+      // Detalha o erro se for um erro de validação do servidor (código 400)
+      if (axios.isAxiosError(error) && error.response && error.response.status === 400) {
+        const errorData = error.response.data;
+        let errorMessage = "Erro de validação: ";
+        if (typeof errorData === 'object' && errorData !== null) {
+            // Tenta extrair mensagens de erro do corpo da resposta
+            if (errorData.errors) { // Para erros de validação ASP.NET Core ModelState
+                for (const key in errorData.errors) {
+                    errorMessage += `${key}: ${errorData.errors[key].join(', ')}. `;
+                }
+            } else if (errorData.title) { // Para outros erros com título
+                errorMessage += errorData.title;
+            } else {
+                errorMessage += JSON.stringify(errorData);
+            }
+        } else if (typeof errorData === 'string') {
+            errorMessage += errorData;
+        } else {
+            errorMessage += "Detalhes não disponíveis.";
+        }
+        alert(errorMessage);
+      } else {
+        alert("Erro ao processar obra. Verifique o console para mais detalhes.");
+      }
     } finally {
       setLoading(false);
     }
@@ -230,8 +263,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <CustomMessage message={message?.text || ''} type={message?.type || 'success'} onClose={() => setMessage(null)} />
-
       <div className="form-container bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Cadastro de Obra</h2>
         <p className="text-sm text-gray-600 mb-4 text-center">
@@ -371,7 +402,7 @@ export default function App() {
                   <option key={eng.id} value={eng.id}>{eng.nome}</option>
                 ))
               ) : (
-                <option value="">Carregando engenheiros...</option>
+                <option value={0}>Carregando engenheiros...</option>
               )}
             </select>
           </div>
@@ -390,7 +421,7 @@ export default function App() {
                   <option key={status.id} value={status.id}>{status.nome}</option>
                 ))
               ) : (
-                <option value="">Carregando status...</option>
+                <option value={0}>Carregando status...</option>
               )}
             </select>
           </div>
@@ -409,7 +440,7 @@ export default function App() {
                   <option key={trilho.id} value={trilho.id}>{trilho.nome}</option>
                 ))
               ) : (
-                <option value="">Carregando trilhos...</option>
+                <option value={0}>Carregando trilhos...</option>
               )}
             </select>
           </div>
