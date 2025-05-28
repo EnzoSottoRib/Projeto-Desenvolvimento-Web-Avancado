@@ -18,9 +18,9 @@ namespace _ProjetoEdenz.Models
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(13, ErrorMessage = "A data de nascimento precisa ter no máximo 13 caracteres.")]
-        [MinLength(7, ErrorMessage = "A data de nascimento precisa ter no mínimo 7 caracteres.")]
-        public string DataNascimento { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [MaxLength(15, ErrorMessage = "O registro CREA precisa ter no máximo 15 caracteres.")]

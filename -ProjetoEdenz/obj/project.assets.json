@@ -1486,24 +1486,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eduardo\\.nuget\\packages\\": {}
+    "C:\\Users\\enzon\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+      "projectUniqueName": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
       "projectName": "-ProjetoEdenz",
-      "projectPath": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
-      "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eduardo\\Desktop\\ProjetoSoftwareVisual - projeto\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
+      "projectPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+      "packagesPath": "C:\\Users\\enzon\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\enzon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1522,7 +1524,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -1565,19 +1567,19 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
+            "version": "[8.0.16, 8.0.16]"
           },
           {
             "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.15, 8.0.15]"
+            "version": "[8.0.16, 8.0.16]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
+            "version": "[8.0.16, 8.0.16]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
+            "version": "[8.0.16, 8.0.16]"
           }
         ],
         "frameworkReferences": {
@@ -1588,7 +1590,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

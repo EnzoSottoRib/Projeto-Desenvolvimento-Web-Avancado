@@ -23,13 +23,20 @@ function EngenheiroAdicionar() {
     setEngenheiro({ ...engenheiro, [id]: value });
   }
 
+  function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const dateValue = e.target.value;
+    setEngenheiro({ ...engenheiro, dataNascimento: dateValue });
+  }
+
   function enviarEngenheiro(e: React.FormEvent) {
     e.preventDefault();
 
     const engenheiroParaEnviar = {
-      ...engenheiro,
-      DataNascimento: engenheiro.dataNascimento,
-      RegistroCREA: engenheiro.registroCREA
+      nome: engenheiro.nome,
+      cpf: engenheiro.cpf,
+      dataNascimento: engenheiro.dataNascimento,
+      registroCREA: engenheiro.registroCREA,
+      contato: engenheiro.contato,
     };
 
     fetch('http://localhost:5178/api/engenheiro', {
@@ -37,11 +44,13 @@ function EngenheiroAdicionar() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(engenheiro),
+      body: JSON.stringify(engenheiroParaEnviar),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error('Erro ao cadastrar engenheiro');
+          // Captura os detalhes do erro do backend
+          const errorData = await response.json();
+          throw new Error(errorData.title || JSON.stringify(errorData.errors) || 'Erro ao cadastrar');
         }
         return response.json();
       })
@@ -91,11 +100,12 @@ function EngenheiroAdicionar() {
         <div className="form-group">
           <label htmlFor="dataNascimento">Data de Nascimento</label>
           <input
-            type="text"
+            type="date"
             id="dataNascimento"
             value={engenheiro.dataNascimento}
-            onChange={handleChange}
+            onChange={handleDateChange}
             required
+            max={new Date().toISOString().split('T')[0]} 
           />
         </div>
 

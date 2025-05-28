@@ -23,8 +23,8 @@ namespace _ProjetoEdenz.Models
         public required string Senha { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [MaxLength(13, ErrorMessage = "A data de nascimento precisa ter no máximo 13 caracteres.")]
-        [MinLength(7, ErrorMessage = "A data de nascimento precisa ter no mínimo 7 caracteres.")]
+        [MaxLength(13, ErrorMessage = "O CPF precisa ter no máximo 13 caracteres.")]
+        [MinLength(7, ErrorMessage = "O CPF precisa ter no mínimo 7 caracteres.")]
         public required string Cpf { get; set; }
     }
 }

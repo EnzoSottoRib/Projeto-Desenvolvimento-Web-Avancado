@@ -17,17 +17,34 @@ namespace _ProjetoEdenz.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEngenheiro(Engenheiro engenheiro)
+        public async Task<IActionResult> AddEngenheiro([FromBody] Engenheiro engenheiro)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _appDbContext.Engenheiros.Add(engenheiro);
-            await _appDbContext.SaveChangesAsync();
+            if (engenheiro.DataNascimento > DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(engenheiro.DataNascimento), "Data de nascimento não pode ser futura");
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction(nameof(GetEngenheiro), new { id = engenheiro.Id }, engenheiro);
+            try
+            {
+                _appDbContext.Engenheiros.Add(engenheiro);
+                await _appDbContext.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetEngenheiro), new { id = engenheiro.Id }, engenheiro);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    title = "Erro interno no servidor",
+                    details = ex.Message
+                });
+            }
         }
 
         [HttpGet]
@@ -58,33 +75,60 @@ namespace _ProjetoEdenz.Controllers
                 return BadRequest("ID da URL e do objeto não conferem.");
             }
 
-            var engenheiroExistente = await _appDbContext.Engenheiros.FindAsync(id);
-
-            if (engenheiroExistente == null)
+            if (engenheiroAtualizado.DataNascimento > DateTime.Now)
             {
-                return NotFound("Engenheiro não encontrado!");
+                return BadRequest("Data de nascimento não pode ser futura");
             }
 
-            _appDbContext.Entry(engenheiroExistente).CurrentValues.SetValues(engenheiroAtualizado);
-            await _appDbContext.SaveChangesAsync();
+            try
+            {
+                var engenheiroExistente = await _appDbContext.Engenheiros.FindAsync(id);
 
-            return NoContent();
+                if (engenheiroExistente == null)
+                {
+                    return NotFound("Engenheiro não encontrado!");
+                }
+
+                _appDbContext.Entry(engenheiroExistente).CurrentValues.SetValues(engenheiroAtualizado);
+                await _appDbContext.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    title = "Erro interno no servidor",
+                    details = ex.Message
+                });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEngenheiro(int id)
         {
-            var engenheiro = await _appDbContext.Engenheiros.FindAsync(id);
-
-            if (engenheiro == null)
+            try
             {
-                return NotFound("Engenheiro não encontrado!");
+                var engenheiro = await _appDbContext.Engenheiros.FindAsync(id);
+
+                if (engenheiro == null)
+                {
+                    return NotFound("Engenheiro não encontrado!");
+                }
+
+                _appDbContext.Engenheiros.Remove(engenheiro);
+                await _appDbContext.SaveChangesAsync();
+
+                return Ok("Engenheiro mandado para a glória!");
             }
-
-            _appDbContext.Engenheiros.Remove(engenheiro);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok("Engenheiro mandado para a glória!");
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    title = "Erro interno no servidor",
+                    details = ex.Message
+                });
+            }
         }
     }
 }

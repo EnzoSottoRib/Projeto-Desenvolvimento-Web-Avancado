@@ -14,57 +14,88 @@ interface Engenheiro {
 function EngenheiroAlterar() {
   const { id } = useParams();
   const [engenheiro, setEngenheiro] = useState<Engenheiro | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [nome, setNome] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [dataNascimento, setDataNascimento] = useState("");
-  const [registroCREA, setRegistroCREA] = useState("");
-  const [contato, setContato] = useState("");
+  const [formData, setFormData] = useState<Omit<Engenheiro, 'id'>>({
+    nome: '',
+    cpf: '',
+    dataNascimento: '',
+    registroCREA: '',
+    contato: ''
+  });
 
   useEffect(() => {
-    if (id) {
-      axios
-        .get<Engenheiro>(`http://localhost:5178/api/engenheiro/${id}`)
-        .then((resposta) => {
-          const dados = resposta.data;
-          setEngenheiro(dados);
-          setNome(dados.nome);
-          setCpf(dados.cpf);
-          setDataNascimento(dados.dataNascimento);
-          setRegistroCREA(dados.registroCREA);
-          setContato(dados.contato);
-        })
-        .catch((erro) => {
-          console.error("Erro ao buscar engenheiro", erro);
+    const fetchEngenheiro = async () => {
+      try {
+        const resposta = await axios.get<Engenheiro>(`http://localhost:5178/api/engenheiro/${id}`);
+        const dados = resposta.data;
+        
+        const dataFormatada = dados.dataNascimento 
+          ? new Date(dados.dataNascimento).toISOString().split('T')[0]
+          : '';
+        
+        setEngenheiro(dados);
+        setFormData({
+          nome: dados.nome,
+          cpf: dados.cpf,
+          dataNascimento: dataFormatada,
+          registroCREA: dados.registroCREA,
+          contato: dados.contato
         });
-    }
-  }, [id]);
-
-  function enviarEngenheiro(e: React.FormEvent) {
-    e.preventDefault();
-
-    const engenheiroAtualizado: Engenheiro = {
-      id: Number(id),
-      nome,
-      cpf,
-      dataNascimento,
-      registroCREA,
-      contato,
+      } catch (erro) {
+        console.error("Erro ao buscar engenheiro", erro);
+        setError("Erro ao carregar dados do engenheiro");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    axios
-      .put(`http://localhost:5178/api/engenheiro/${id}`, engenheiroAtualizado)
-      .then((resposta) => {
-        console.log("Engenheiro atualizado:", resposta.data);
-        alert("Engenheiro atualizado com sucesso!");
-      })
-      .catch((erro) => {
-        console.error("Erro ao atualizar engenheiro:", erro);
-        alert("Erro ao atualizar engenheiro!");
-      });
-  }
+    if (id) fetchEngenheiro();
+  }, [id]);
 
-  if (!engenheiro) return <div>Carregando engenheiro...</div>;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, dataNascimento: e.target.value }));
+  };
+
+  const enviarEngenheiro = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const engenheiroAtualizado = {
+        id: Number(id),
+        ...formData
+      };
+
+      const resposta = await axios.put(
+        `http://localhost:5178/api/engenheiro/${id}`,
+        engenheiroAtualizado
+      );
+
+      console.log("Engenheiro atualizado:", resposta.data);
+      alert("Engenheiro atualizado com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao atualizar engenheiro:", erro);
+      
+      if (axios.isAxiosError(erro) && erro.response) {
+        const errorMessage = erro.response.data?.title || 
+                           JSON.stringify(erro.response.data?.errors) || 
+                           "Erro ao atualizar engenheiro";
+        alert(errorMessage);
+      } else {
+        alert("Erro ao atualizar engenheiro!");
+      }
+    }
+  };
+
+  if (loading) return <div>Carregando engenheiro...</div>;
+  if (error) return <div>{error}</div>;
+  if (!engenheiro) return <div>Engenheiro não encontrado</div>;
 
   return (
     <div className="form-container">
@@ -77,8 +108,8 @@ function EngenheiroAlterar() {
           <input
             type="text"
             id="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            value={formData.nome}
+            onChange={handleChange}
             required
           />
         </div>
@@ -88,8 +119,8 @@ function EngenheiroAlterar() {
           <input
             type="text"
             id="cpf"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            value={formData.cpf}
+            onChange={handleChange}
             required
           />
         </div>
@@ -97,11 +128,12 @@ function EngenheiroAlterar() {
         <div className="form-group">
           <label htmlFor="dataNascimento">Data de Nascimento</label>
           <input
-            type="text"
+            type="date"
             id="dataNascimento"
-            value={dataNascimento}
-            onChange={(e) => setDataNascimento(e.target.value)}
+            value={formData.dataNascimento}
+            onChange={handleDateChange}
             required
+            max={new Date().toISOString().split('T')[0]} 
           />
         </div>
 
@@ -110,8 +142,8 @@ function EngenheiroAlterar() {
           <input
             type="text"
             id="registroCREA"
-            value={registroCREA}
-            onChange={(e) => setRegistroCREA(e.target.value)}
+            value={formData.registroCREA}
+            onChange={handleChange}
             required
           />
         </div>
@@ -121,8 +153,8 @@ function EngenheiroAlterar() {
           <input
             type="text"
             id="contato"
-            value={contato}
-            onChange={(e) => setContato(e.target.value)}
+            value={formData.contato}
+            onChange={handleChange}
             required
           />
         </div>
