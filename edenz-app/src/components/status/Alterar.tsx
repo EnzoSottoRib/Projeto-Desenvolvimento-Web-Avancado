@@ -1,64 +1,67 @@
-import React from 'react';
-import { useEffect ,useState } from 'react';
-import fotoMain from '../img/tremHome.png';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect ,useState } from 'react';
+import { useParams } from 'react-router-dom'; // Mantendo useParams conforme seu exemplo
 import axios from 'axios';
-// import "../css/Home.css";
 
-// interface Trilho {
-//     id?: number;
-//     nome: string;
-// }
-
+interface Status {
+    id?: number;
+    nome: string;
+}
 
 function StatusAlterar() {
-  // const { id } = useParams();
-  // const [trilho, setTrilho] = useState<Trilho | null>(null);
-  // const [nome, setNome] = useState("");
+  const { id } = useParams(); // Obtendo o ID da URL
+  const [statusItem, setStatusItem] = useState<Status | null>(null);
+  const [nome, setNome] = useState("");
 
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get<Trilho>(`http://localhost:5178/api/trilho/${id}`)
-  //       .then((resposta) => {
-  //         const trilhoData = resposta.data;
-  //         setTrilho(trilhoData);
-  //         setNome(trilhoData.nome);
-  //       })
-  //       .catch((erro) => {
-  //         console.error("Erro ao buscar trilhos:", erro);
-  //       });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Status>(`http://localhost:5178/api/status/${id}`)
+        .then((resposta) => {
+          const statusData = resposta.data;
+          setStatusItem(statusData);
+          setNome(statusData.nome);
+        })
+        .catch((erro) => {
+          console.error("Erro ao buscar status:", erro);
+          alert("Erro ao carregar os dados do status!"); // Usando alert conforme solicitado
+        });
+    }
+  }, [id]); // Dependência do ID para re-fetch quando o ID na URL mudar
 
-  // function enviarTrilho(e: any) {
-  //   e.preventDefault();
+  function enviarStatus(e: React.FormEvent) {
+    e.preventDefault();
 
-  //   const trilhoData: Trilho = {
-  //     id: Number(id),
-  //     nome
-  //   };
+    if (!nome.trim()) { // Validação simples para nome vazio
+      alert("O nome do status é obrigatório.");
+      return;
+    }
 
-  //   axios
-  //     .put(`http://localhost:5178/api/trilho/${id}`, trilhoData)
-  //     .then((resposta) => {
-  //       console.log("Trilho atualizado", resposta.data);
-  //       alert("Trilho Atualizado!!!")
-  //     })
-  //     .catch((erro) => {
-  //       console.error("Erro ao atualizar trilho", erro);
-  //     });
-  // }
+    const statusData: Status = {
+      id: Number(id), // Convertendo o ID de string para number
+      nome
+    };
 
-  // if (!trilho) return <div>Carregando...</div>; 
+    axios
+      .put(`http://localhost:5178/api/status/${id}`, statusData)
+      .then((resposta) => {
+        console.log("Status atualizado", resposta.data);
+        alert("Status Atualizado!!!"); // Usando alert conforme solicitado
+      })
+      .catch((erro) => {
+        console.error("Erro ao atualizar status", erro);
+        alert("Erro ao atualizar status!"); // Usando alert conforme solicitado
+      });
+  }
+
+  if (!statusItem) return <div>Carregando...</div>; 
 
   return (
     <div className="form-container">
-      {/* <div className="form-header">
-        <h2>Editar Trilho</h2>
+      <div className="form-header">
+        <h2>Editar Status</h2>
       </div>
-      <form onSubmit={enviarTrilho}>
+      <form onSubmit={enviarStatus}>
         <div className="form-group">
           <label htmlFor="nome">Nome</label>
           <input
@@ -69,11 +72,11 @@ function StatusAlterar() {
             required
           />
         </div>
-       
+        
         <button type="submit">Salvar Alterações</button>
-      </form> */}
+      </form>
     </div>
   );
 }
 
-export default StatusAlterar
+export default StatusAlterar;
