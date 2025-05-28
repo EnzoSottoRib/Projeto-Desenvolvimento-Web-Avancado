@@ -160,9 +160,9 @@ function ManutencaoAdicionar() {
                     required
                 >
                     <option value={0}>Selecione um material</option>
-                    {equipamentos.map((equipamento) => (
-                    <option key={equipamento.id} value={equipamento.id}>
-                        {equipamento.nome}
+                    {materiais.map((material) => (
+                    <option key={material.id} value={material.id}>
+                        {material.nome}
                     </option>
                     ))}
                 </select>
@@ -181,9 +181,9 @@ function ManutencaoAdicionar() {
                     required
                 >
                     <option value={0}>Selecione um equipamento</option>
-                    {materiais.map((material) => (
-                    <option key={material.id} value={material.id}>
-                        {material.nome}
+                    {equipamentos.map((equipamento) => (
+                    <option key={equipamento.id} value={equipamento.id}>
+                        {equipamento.nome}
                     </option>
                     ))}
                 </select>
