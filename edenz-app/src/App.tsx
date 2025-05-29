@@ -19,7 +19,6 @@ import ObraAdicionar from './components/obra/Adicionar';
 import StatusListar from './components/status/Listar';
 import StatusAdicionar from './components/status/Adicionar';
 import UsuarioListar from './components/usuario/Listar';
-import UsuarioAdicionar from './components/usuario/Adicionar';
 import TrilhoAlterar from './components/trilho/Alterar';
 import MaterialAlterar from './components/material/Alterar';
 import EquipamentoAlterar from './components/equipamento/Alterar';
@@ -28,7 +27,6 @@ import ManutencaoAlterar from './components/manutencao/Alterar';
 import EngenheiroAlterar from './components/engenheiro/Alterar';
 import ObraAlterar from './components/obra/Alterar';
 import StatusAlterar from './components/status/Alterar';
-import UsuarioAlterar from './components/usuario/Alterar';
 import Login from './components/login/Login';
 import Cadastro from './components/login/Cadastro';
 import Autenticar from './components/autenticacao/Autenticar';
@@ -166,7 +164,6 @@ function App() {
 
     {/* Usuario */}
     <Route path="/listar/usuario" element={<Autenticar><UsuarioListar /></Autenticar>} />
-    <Route path="/editar/usuario/:id" element={<Autenticar><UsuarioAlterar /></Autenticar>} />
 </Routes>
 
     </BrowserRouter>

@@ -28,7 +28,6 @@ namespace Xablau.Controllers
             if (usuario == null)
                 return Unauthorized("Email ou senha inválidos.");
 
-            // Verifica a senha usando BCrypt
             bool senhaValida = BCrypt.Net.BCrypt.Verify(login.Senha, usuario.Senha);
 
             if (!senhaValida)

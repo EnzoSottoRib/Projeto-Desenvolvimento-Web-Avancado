@@ -1,5 +1,5 @@
 import React, { useEffect ,useState } from 'react';
-import { useParams } from 'react-router-dom'; // Mantendo useParams conforme seu exemplo
+import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
 
 interface Status {
@@ -8,7 +8,7 @@ interface Status {
 }
 
 function StatusAlterar() {
-  const { id } = useParams(); // Obtendo o ID da URL
+  const { id } = useParams(); 
   const [statusItem, setStatusItem] = useState<Status | null>(null);
   const [nome, setNome] = useState("");
 
@@ -24,21 +24,21 @@ function StatusAlterar() {
         })
         .catch((erro) => {
           console.error("Erro ao buscar status:", erro);
-          alert("Erro ao carregar os dados do status!"); // Usando alert conforme solicitado
+          alert("Erro ao carregar os dados do status!"); 
         });
     }
-  }, [id]); // Dependência do ID para re-fetch quando o ID na URL mudar
+  }, [id]); 
 
   function enviarStatus(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!nome.trim()) { // Validação simples para nome vazio
+    if (!nome.trim()) { 
       alert("O nome do status é obrigatório.");
       return;
     }
 
     const statusData: Status = {
-      id: Number(id), // Convertendo o ID de string para number
+      id: Number(id), 
       nome
     };
 
@@ -46,11 +46,11 @@ function StatusAlterar() {
       .put(`http://localhost:5178/api/status/${id}`, statusData)
       .then((resposta) => {
         console.log("Status atualizado", resposta.data);
-        alert("Status Atualizado!!!"); // Usando alert conforme solicitado
+        alert("Status Atualizado!!!"); 
       })
       .catch((erro) => {
         console.error("Erro ao atualizar status", erro);
-        alert("Erro ao atualizar status!"); // Usando alert conforme solicitado
+        alert("Erro ao atualizar status!"); 
       });
   }
 

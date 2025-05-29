@@ -40,16 +40,16 @@
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/Edumachadoh/Projeto-Desenv-Web-Avancado.git
+git clone https://github.com/EnzoSottoRib/Projeto-Desenvolvimento-Web-Avancado.git
 
 # 2. Acesse a pasta do projeto
-cd Projeto-Desenv-Web-Avancado
+cd Projeto-Desenvolvimento-Web-Avancado
 
-# 3. Restaure os pacotes
-dotnet restore
+# 3. Restaure os pacotes na pasta edenz-app
+npm i
 
-# 4. Execute a aplicação
+# 4. Execute a aplicação no backend
 dotnet run 
-Selecione o arquivo "Program.cs"
-Selecione o botão com sinal de play na parte superior direita
-Selecione "Executar projeto associado a esse arquivo"
+
+# 5. Execute a aplicação no frondend
+npm start

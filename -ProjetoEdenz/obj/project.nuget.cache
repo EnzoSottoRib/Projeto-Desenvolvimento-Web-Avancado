@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q1SawramPpQ=",
+  "dgSpecHash": "hS+MBmKbK2k=",
   "success": true,
-  "projectFilePath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+  "projectFilePath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\enzon\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\enzon\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -33,7 +33,6 @@ namespace _ProjetoEdenz.Controllers
             if (equipamento == null)
                 return BadRequest("Equipamento não encontrado!");
 
-            // Atribui o objeto real de equipamento
             manutencao.Equipamento = equipamento;
             manutencao.Obra = obra;
             manutencao.Material = material;

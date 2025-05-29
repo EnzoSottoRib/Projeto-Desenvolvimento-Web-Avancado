@@ -41,7 +41,7 @@ function TrilhoAdicionar() {
     if (data) {
       console.log("Trilho cadastrado:", data);
       alert("Trilho Cadastrado");
-      setNome(""); // Limpa o campo após cadastro
+      setNome(""); 
     }
   })
   .catch((error) => {

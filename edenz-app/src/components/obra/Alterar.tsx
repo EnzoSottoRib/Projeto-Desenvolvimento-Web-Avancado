@@ -43,8 +43,8 @@ interface Trilho {
 }
 
 export default function ObraAlterar() {
-  const { id } = useParams<{ id: string }>(); // Pega o ID da URL
-  const navigate = useNavigate(); // Hook para navegação programática
+  const { id } = useParams<{ id: string }>(); 
+  const navigate = useNavigate(); 
 
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -90,7 +90,7 @@ export default function ObraAlterar() {
         setErrorMessage("Nenhum usuário logado encontrado. Por favor, faça login.");
       }
 
-      // Primeiro, tente carregar as opções de dropdown
+      
       try {
         const [engenheirosRes, statusRes, trilhosRes] = await Promise.all([
           axios.get<Engenheiro[]>('http://localhost:5178/api/engenheiro'),
@@ -102,7 +102,7 @@ export default function ObraAlterar() {
         setStatusOptions(statusRes.data);
         setTrilhos(trilhosRes.data);
 
-        // Se há um ID na URL, tente carregar os dados da obra existente
+        
         if (id) {
           const obraId = Number(id);
           if (isNaN(obraId)) {
@@ -114,17 +114,14 @@ export default function ObraAlterar() {
           const obraRes = await axios.get<Obra>(`http://localhost:5178/api/obra/${obraId}`);
           const obraExistente = obraRes.data;
 
-          // Define o id da obra e o id do usuário logado (se houver)
+          
           setObra({ ...obraExistente, id: obraId, idUsuario: userId });
 
         } else {
-          // Se não há ID na URL (modo de criação, mas esta tela é para atualização)
-          // Você pode querer redirecionar ou tratar como um erro.
-          // Por enquanto, apenas defina o id do usuário.
+          
           setObra(prev => ({
             ...prev,
             idUsuario: userId,
-            // Valores padrão para dropdowns se for uma tela de criação e não de edição
             idEngenheiro: engenheirosRes.data.length > 0 ? engenheirosRes.data[0].id : 0,
             idStatus: statusRes.data.length > 0 ? statusRes.data[0].id : 0,
             idTrilho: trilhosRes.data.length > 0 ? trilhosRes.data[0].id : 0,
@@ -143,7 +140,7 @@ export default function ObraAlterar() {
     };
 
     fetchObraData();
-  }, [id]); // Dependência no 'id' para recarregar se o ID da URL mudar
+  }, [id]); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -165,9 +162,9 @@ export default function ObraAlterar() {
   };
 
   const validateForm = (): boolean => {
-    setErrorMessage(''); // Limpa mensagens de erro anteriores
+    setErrorMessage(''); 
 
-    // Validações existentes
+    
     if (!obra.nome || obra.nome.length < 4 || obra.nome.length > 50) {
       setErrorMessage("O nome da obra deve ter entre 4 e 50 caracteres.");
       return false;
@@ -189,7 +186,7 @@ export default function ObraAlterar() {
       return false;
     }
 
-    if (obra.custoPrevisto === 0 && obra.custoPrevisto !== 0) { // Garante que 0 é permitido se for um valor real
+    if (obra.custoPrevisto === 0 && obra.custoPrevisto !== 0) { 
         setErrorMessage("O custo previsto é obrigatório e deve ser um valor válido.");
         return false;
     }
@@ -249,10 +246,10 @@ export default function ObraAlterar() {
     try {
       const formattedObra = {
         ...obra,
-        // Garante que as datas estão no formato correto, se necessário para a API
+        
         dataInicio: obra.dataInicio,
         dataFim: obra.dataFim,
-        idUsuario: obra.idUsuario, // Certifica que o idUsuario está sendo enviado
+        idUsuario: obra.idUsuario, 
       };
 
 
@@ -284,7 +281,7 @@ export default function ObraAlterar() {
     }
   };
 
-  if (loading && (!obra.id && !errorMessage)) { // Carregando inicial ou se não há erro
+  if (loading && (!obra.id && !errorMessage)) { 
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-indigo-600 text-lg font-semibold">Carregando dados da obra...</div>
@@ -292,8 +289,7 @@ export default function ObraAlterar() {
     );
   }
 
-  // Se houver um erro antes mesmo de tentar carregar os dados
-  if (errorMessage && !loading && !obra.nome) { // Se há erro e a obra não foi carregada
+  if (errorMessage && !loading && !obra.nome) { 
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="form-container bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
@@ -302,7 +298,7 @@ export default function ObraAlterar() {
             <span className="block sm:inline ml-2" dangerouslySetInnerHTML={{ __html: errorMessage.replace(/\n/g, '<br/>') }}></span>
           </div>
           <button
-            onClick={() => navigate(-1)} // Volta para a página anterior
+            onClick={() => navigate(-1)} 
             className="w-full md:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"
           >
             Voltar
@@ -374,7 +370,7 @@ export default function ObraAlterar() {
             <input
               type="date"
               id="dataInicio"
-              value={obra.dataInicio ? obra.dataInicio.split('T')[0] : ''} // Formata para 'YYYY-MM-DD'
+              value={obra.dataInicio ? obra.dataInicio.split('T')[0] : ''} 
               onChange={handleDateChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -386,7 +382,7 @@ export default function ObraAlterar() {
             <input
               type="date"
               id="dataFim"
-              value={obra.dataFim ? obra.dataFim.split('T')[0] : ''} // Formata para 'YYYY-MM-DD'
+              value={obra.dataFim ? obra.dataFim.split('T')[0] : ''} 
               onChange={handleDateChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"

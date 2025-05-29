@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj": {}
+    "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj": {}
   },
   "projects": {
-    "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj": {
+    "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+        "projectUniqueName": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
         "projectName": "-ProjetoEdenz",
-        "projectPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
+        "projectPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\-ProjetoEdenz.csproj",
         "packagesPath": "C:\\Users\\enzon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\Edenz\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
+        "outputPath": "C:\\Users\\enzon\\OneDrive\\Documentos\\Faculdade\\EdenzFinal\\Projeto-Desenvolvimento-Web-Avancado\\-ProjetoEdenz\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\enzon\\AppData\\Roaming\\NuGet\\NuGet.Config",

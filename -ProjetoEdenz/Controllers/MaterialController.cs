@@ -68,7 +68,7 @@ namespace _ProjetoEdenz.Controllers
             _appDbContext.Entry(materialExistente).CurrentValues.SetValues(materialAtualizado);
             await _appDbContext.SaveChangesAsync();
 
-            return NoContent(); // 204: atualizado com sucesso, sem conteúdo para retornar
+            return NoContent(); 
         }
 
         [HttpDelete("{id}")]

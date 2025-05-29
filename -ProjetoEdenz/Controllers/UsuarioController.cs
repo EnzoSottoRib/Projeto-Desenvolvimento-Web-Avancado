@@ -31,7 +31,7 @@ namespace _ProjetoEdenz.Controllers
         return BadRequest("Este e-mail já está em uso.");
     }
 
-    // Gera a senha criptografada diretamente sem necessidade de criar um salt separado
+    
     usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
 
     _appDbContext.Usuarios.Add(usuario);
