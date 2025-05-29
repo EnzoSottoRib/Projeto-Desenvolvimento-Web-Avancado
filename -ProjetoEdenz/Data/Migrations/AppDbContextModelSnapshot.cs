@@ -2,20 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _ProjetoEdenz.Data;
 
 #nullable disable
 
-namespace _ProjetoEdenz.Migrations
+namespace _ProjetoEdenz.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528130331_InitialMigration")]
-    partial class InitialMigration
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,23 +167,16 @@ namespace _ProjetoEdenz.Migrations
                     b.Property<double>("CustoReal")
                         .HasColumnType("double");
 
-                    b.Property<string>("DataFim")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("varchar(13)");
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DataInicio")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<int?>("EngenheiroId")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdEngenheiro")
                         .HasColumnType("int");
@@ -215,12 +205,6 @@ namespace _ProjetoEdenz.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TrilhoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TrilhoQtd")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -231,11 +215,11 @@ namespace _ProjetoEdenz.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EngenheiroId");
+                    b.HasIndex("IdEngenheiro");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("IdStatus");
 
-                    b.HasIndex("TrilhoId");
+                    b.HasIndex("IdTrilho");
 
                     b.HasIndex("UsuarioId");
 
@@ -353,15 +337,21 @@ namespace _ProjetoEdenz.Migrations
                 {
                     b.HasOne("_ProjetoEdenz.Models.Engenheiro", "Engenheiro")
                         .WithMany()
-                        .HasForeignKey("EngenheiroId");
+                        .HasForeignKey("IdEngenheiro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("_ProjetoEdenz.Models.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("IdStatus")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("_ProjetoEdenz.Models.Trilho", "Trilho")
                         .WithMany()
-                        .HasForeignKey("TrilhoId");
+                        .HasForeignKey("IdTrilho")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("_ProjetoEdenz.Models.Usuario", "Usuario")
                         .WithMany()

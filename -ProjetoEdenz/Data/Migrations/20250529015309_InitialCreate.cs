@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace _ProjetoEdenz.Migrations
+namespace _ProjetoEdenz.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,8 +25,7 @@ namespace _ProjetoEdenz.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cpf = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataNascimento = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataNascimento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     RegistroCREA = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Contato = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
@@ -127,21 +127,16 @@ namespace _ProjetoEdenz.Migrations
                     IdUsuario = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<int>(type: "int", nullable: true),
                     IdEngenheiro = table.Column<int>(type: "int", nullable: false),
-                    EngenheiroId = table.Column<int>(type: "int", nullable: true),
                     IdStatus = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: true),
                     IdTrilho = table.Column<int>(type: "int", nullable: false),
-                    TrilhoId = table.Column<int>(type: "int", nullable: true),
                     TrilhoQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Localizacao = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataInicio = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataFim = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataFim = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CustoPrevisto = table.Column<double>(type: "double", nullable: false),
                     CustoReal = table.Column<double>(type: "double", nullable: false),
                     Complexidade = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
@@ -155,20 +150,23 @@ namespace _ProjetoEdenz.Migrations
                 {
                     table.PrimaryKey("PK_Obras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Obras_Engenheiros_EngenheiroId",
-                        column: x => x.EngenheiroId,
+                        name: "FK_Obras_Engenheiros_IdEngenheiro",
+                        column: x => x.IdEngenheiro,
                         principalTable: "Engenheiros",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Obras_Status_StatusId",
-                        column: x => x.StatusId,
+                        name: "FK_Obras_Status_IdStatus",
+                        column: x => x.IdStatus,
                         principalTable: "Status",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Obras_Trilhos_TrilhoId",
-                        column: x => x.TrilhoId,
+                        name: "FK_Obras_Trilhos_IdTrilho",
+                        column: x => x.IdTrilho,
                         principalTable: "Trilhos",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Obras_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -186,6 +184,7 @@ namespace _ProjetoEdenz.Migrations
                     IdObra = table.Column<int>(type: "int", nullable: false),
                     ObraId = table.Column<int>(type: "int", nullable: true),
                     IdMaterial = table.Column<int>(type: "int", nullable: false),
+                    MaterialId = table.Column<int>(type: "int", nullable: true),
                     Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MaterialQtd = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
@@ -242,6 +241,11 @@ namespace _ProjetoEdenz.Migrations
                 column: "EquipamentoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Manutencoes_MaterialId",
+                table: "Manutencoes",
+                column: "MaterialId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Manutencoes_ObraId",
                 table: "Manutencoes",
                 column: "ObraId");
@@ -252,40 +256,55 @@ namespace _ProjetoEdenz.Migrations
                 column: "ManutencaoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_EngenheiroId",
+                name: "IX_Obras_IdEngenheiro",
                 table: "Obras",
-                column: "EngenheiroId");
+                column: "IdEngenheiro");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_StatusId",
+                name: "IX_Obras_IdStatus",
                 table: "Obras",
-                column: "StatusId");
+                column: "IdStatus");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_TrilhoId",
+                name: "IX_Obras_IdTrilho",
                 table: "Obras",
-                column: "TrilhoId");
+                column: "IdTrilho");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_UsuarioId",
                 table: "Obras",
                 column: "UsuarioId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Manutencoes_Materiais_MaterialId",
+                table: "Manutencoes",
+                column: "MaterialId",
+                principalTable: "Materiais",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Materiais");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Manutencoes_Equipamentos_EquipamentoId",
+                table: "Manutencoes");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Manutencoes_Materiais_MaterialId",
+                table: "Manutencoes");
 
             migrationBuilder.DropTable(
                 name: "TiposManutencao");
 
             migrationBuilder.DropTable(
-                name: "Manutencoes");
+                name: "Equipamentos");
 
             migrationBuilder.DropTable(
-                name: "Equipamentos");
+                name: "Materiais");
+
+            migrationBuilder.DropTable(
+                name: "Manutencoes");
 
             migrationBuilder.DropTable(
                 name: "Obras");
