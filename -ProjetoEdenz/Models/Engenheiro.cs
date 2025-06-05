@@ -1,0 +1,35 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace _ProjetoEdenz.Models
+{
+    public class Engenheiro
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(50, ErrorMessage = "O nome precisa ter no máximo 50 caracteres.")]
+        [MinLength(4, ErrorMessage = "O nome precisa ter no mínimo 4 caracteres.")]
+        public string Nome { get; set; }
+        
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(14, ErrorMessage = "O cpf precisa ter no máximo 14 caracteres.")]
+        [MinLength(8, ErrorMessage = "O cpf precisa ter no mínimo 8 caracteres.")]
+        public string Cpf { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DataNascimento { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(15, ErrorMessage = "O registro CREA precisa ter no máximo 15 caracteres.")]
+        [MinLength(5, ErrorMessage = "O registro CREA precisa ter no mínimo 5 caracteres.")]
+        public string RegistroCREA { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [MaxLength(20, ErrorMessage = "O contato precisa ter no máximo 20 caracteres.")]
+        [MinLength(5, ErrorMessage = "O contato precisa ter no mínimo 5 caracteres.")]
+        public string Contato { get; set; }
+    }
+}

@@ -1,0 +1,6 @@
+@_ProjetoEdenz_HostAddress = http://localhost:5178
+
+GET {{_ProjetoEdenz_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
